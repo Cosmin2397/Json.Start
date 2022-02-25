@@ -6,9 +6,13 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            if (input == null)
+            string[] controlChars = { "\n", "\r" };
+            foreach (string c in controlChars)
             {
-                return false;
+                if (input?.Contains(c) != false)
+                {
+                    return false;
+                }
             }
 
             return input.StartsWith("\"") && input.EndsWith("\"") && input.Length > 1;
