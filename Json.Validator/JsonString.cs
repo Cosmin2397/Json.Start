@@ -6,6 +6,11 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
+            if (input == null)
+            {
+                return false;
+            }
+
             return input.StartsWith("\"") && input.EndsWith("\"");
         }
     }
