@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (StartsWithZero(input))
+            if (StartsWithZero(input) || IsInvalidFractionalNum(input))
             {
                 return false;
             }
@@ -23,6 +23,20 @@ namespace Json
         {
             return IsNullOrEmpty(input)
                    || (input.Length > 1 && input[0] == '0' && input[1] != '.');
+        }
+
+        static bool IsInvalidFractionalNum(string input)
+        {
+            int dots = 0;
+            foreach (char c in input)
+            {
+                if (c == '.')
+                {
+                    dots++;
+                }
+            }
+
+            return dots > 1 || input[input.Length - 1] == '.';
         }
     }
 }
