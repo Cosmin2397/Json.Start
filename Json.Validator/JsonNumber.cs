@@ -11,7 +11,7 @@ namespace Json
                 return false;
             }
 
-            return int.TryParse(input, out _);
+            return double.TryParse(input, out _);
         }
 
         static bool StartsWithZeroOrIsNullOrEmpty(string input)
