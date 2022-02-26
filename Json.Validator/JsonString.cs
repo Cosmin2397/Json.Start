@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input) || EndsWithAnUnfinishedHexNumber(input))
             {
                 return false;
             }
@@ -64,8 +64,25 @@ namespace Json
 
         static bool EndsWithReverseSolidus(string input)
         {
-            const int lasChar = 2;
-            return input[input.Length - lasChar] != '\\';
+            const int lastChar = 2;
+            return input[^lastChar] != '\\';
+        }
+
+        static bool EndsWithAnUnfinishedHexNumber(string input)
+        {
+            const int two = 2;
+            int length = -1;
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                if (input[i] == '\\' && input[i + 1] == 'u')
+                {
+                    length = (input.Length - 1) - (i + two);
+                }
+            }
+
+            const int minimumUnicode = 4;
+
+            return length > -1 && length <= minimumUnicode;
         }
     }
 }
