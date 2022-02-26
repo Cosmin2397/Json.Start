@@ -6,9 +6,15 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return false;
+            }
+
             return HaveTwoQuotes(input)
                 && ContainsControlChars(input)
-                && ContainsInvalidEscapeChar(input);
+                && ContainsInvalidEscapeChar(input)
+                && EndsWithReverseSolidus(input);
         }
 
         static bool ContainsControlChars(string input)
@@ -54,6 +60,12 @@ namespace Json
             }
 
             return input.StartsWith("\"") && input.EndsWith("\"") && input.Length > 1;
+        }
+
+        static bool EndsWithReverseSolidus(string input)
+        {
+            const int lasChar = 2;
+            return input[input.Length - lasChar] != '\\';
         }
     }
 }
