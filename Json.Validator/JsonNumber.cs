@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (StartsWithZeroOrIsNullOrEmpty(input))
+            if (StartsWithZero(input))
             {
                 return false;
             }
@@ -14,14 +14,15 @@ namespace Json
             return double.TryParse(input, out _);
         }
 
-        static bool StartsWithZeroOrIsNullOrEmpty(string input)
+        static bool IsNullOrEmpty(string input)
         {
-            if (string.IsNullOrEmpty(input))
-            {
-                return true;
-            }
+            return string.IsNullOrEmpty(input);
+        }
 
-            return input.Length > 1 && input[0] == '0';
+        static bool StartsWithZero(string input)
+        {
+            return IsNullOrEmpty(input)
+                   || (input.Length > 1 && input[0] == '0' && input[1] != '.');
         }
     }
 }
