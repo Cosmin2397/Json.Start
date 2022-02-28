@@ -16,10 +16,15 @@ namespace Json
 
         static bool HaveDigits(string input)
         {
+            if (DoesStartWithZero(input))
+            {
+                return false;
+            }
+
             int digitsCount = 0;
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] >= '0' && input[i] <= '9')
+                if ((input[i] >= '0' && input[i] <= '9') || input[0] == '-')
                 {
                     digitsCount++;
                 }
@@ -31,6 +36,16 @@ namespace Json
         static bool IsNullOrEmpty(string input)
         {
             return string.IsNullOrEmpty(input);
+        }
+
+        static bool DoesStartWithZero(string input)
+        {
+            if (input.Length <= 1)
+            {
+                return false;
+            }
+
+            return input[0] == '0';
         }
 
         static bool IsInvalidFractionalNum(string input)
