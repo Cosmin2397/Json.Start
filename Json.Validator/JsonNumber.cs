@@ -11,7 +11,12 @@ namespace Json
                 return false;
             }
 
-            return double.TryParse(input, out _);
+            return IsZero(input);
+        }
+
+        static bool IsZero(string input)
+        {
+            return input == "0";
         }
 
         static bool IsNullOrEmpty(string input)
@@ -36,7 +41,7 @@ namespace Json
                 }
             }
 
-            return dots > 1 || input[input.Length - 1] == '.';
+            return dots > 1 || input[^1] == '.';
         }
     }
 }
