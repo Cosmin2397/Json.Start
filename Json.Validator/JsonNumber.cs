@@ -24,13 +24,13 @@ namespace Json
                 {
                     digitsCount++;
                 }
-                else if (input[i] == '-' || input[i] == '.' || char.ToLower(input[i]) == 'e')
+                else if (input[i] == '-' || input[i] == '+' || input[i] == '.' || char.ToLower(input[i]) == 'e')
                 {
                     charCount++;
                 }
             }
 
-            return digitsCount + charCount == input.Length;
+            return digitsCount + charCount == input.Length && IsValidExponent(input);
         }
 
         static bool IsNullOrEmpty(string input)
@@ -65,6 +65,20 @@ namespace Json
             }
 
             return dots > 1;
+        }
+
+        static bool IsValidExponent(string input)
+        {
+            int exponent = 0;
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (char.ToLower(input[i]) == 'e')
+                {
+                    exponent++;
+                }
+            }
+
+            return exponent <= 1;
         }
     }
 }
