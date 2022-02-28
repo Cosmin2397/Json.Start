@@ -6,7 +6,7 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (IsNullOrEmpty(input) || IsInvalidFractionalNum(input))
+            if (IsNullOrEmpty(input) || IsInvalidFractionalNum(input) || DoesStartWithZero(input))
             {
                 return false;
             }
@@ -16,21 +16,21 @@ namespace Json
 
         static bool HaveDigits(string input)
         {
-            if (DoesStartWithZero(input))
-            {
-                return false;
-            }
-
             int digitsCount = 0;
+            int charCount = 0;
             for (int i = 0; i < input.Length; i++)
             {
-                if ((input[i] >= '0' && input[i] <= '9') || input[0] == '-')
+                if (input[i] >= '0' && input[i] <= '9')
                 {
                     digitsCount++;
                 }
+                else if (input[i] == '-' || input[i] == '.' || char.ToLower(input[i]) == 'e')
+                {
+                    charCount++;
+                }
             }
 
-            return digitsCount == input.Length;
+            return digitsCount + charCount == input.Length;
         }
 
         static bool IsNullOrEmpty(string input)
@@ -50,12 +50,17 @@ namespace Json
 
         static bool IsInvalidFractionalNum(string input)
         {
+            const int endWithDot = 2;
             int dots = 0;
-            foreach (char c in input)
+            for (int i = 0; i < input.Length; ++i)
             {
-                if (c == '.')
+                if (input[i] == '.')
                 {
                     dots++;
+                }
+                else if (input[^1] == '.')
+                {
+                    dots += endWithDot;
                 }
             }
 
