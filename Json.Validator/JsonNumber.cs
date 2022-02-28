@@ -11,26 +11,40 @@ namespace Json
                 return false;
             }
 
-            return HaveDigits(input);
+            return HaveCharsAndDigits(input)
+                && IsValidExponent(input)
+                && ExponentIsComplete(input)
+                && ExponentIsAfterFraction(input);
         }
 
-        static bool HaveDigits(string input)
+        static int HaveDigits(string input)
         {
             int digitsCount = 0;
-            int charCount = 0;
+
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] >= '0' && input[i] <= '9')
                 {
                     digitsCount++;
                 }
-                else if (input[i] == '-' || input[i] == '+' || input[i] == '.' || char.ToLower(input[i]) == 'e')
+            }
+
+            return digitsCount;
+        }
+
+        static bool HaveCharsAndDigits(string input)
+        {
+            int charCount = 0;
+            int digitsCount = HaveDigits(input);
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == '-' || input[i] == '+' || input[i] == '.' || char.ToLower(input[i]) == 'e')
                 {
                     charCount++;
                 }
             }
 
-            return digitsCount + charCount == input.Length && IsValidExponent(input);
+            return charCount + digitsCount == input.Length;
         }
 
         static bool IsNullOrEmpty(string input)
@@ -40,12 +54,17 @@ namespace Json
 
         static bool DoesStartWithZero(string input)
         {
-            if (input.Length <= 1)
+            if (input.Length <= 1 || IsAFraction(input))
             {
                 return false;
             }
 
             return input[0] == '0';
+        }
+
+        static bool IsAFraction(string input)
+        {
+            return input.Contains('.');
         }
 
         static bool IsInvalidFractionalNum(string input)
@@ -79,6 +98,38 @@ namespace Json
             }
 
             return exponent <= 1;
+        }
+
+        static bool ExponentIsComplete(string input)
+        {
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (char.ToLower(input[i]) == 'e')
+                {
+                    return HaveDigits(input.Substring(i)) > 0;
+                }
+            }
+
+            return true;
+        }
+
+        static bool HaveExponentAndFraction(string input)
+        {
+            return input.Contains('.') && input.Contains('e');
+        }
+
+        static bool ExponentIsAfterFraction(string input)
+        {
+            if (HaveExponentAndFraction(input))
+            {
+                return input.IndexOf('e') > input.IndexOf('.');
+            }
+            else if (!HaveExponentAndFraction(input))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
