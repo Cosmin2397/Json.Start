@@ -6,28 +6,31 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (StartsWithZero(input) || IsInvalidFractionalNum(input))
+            if (IsNullOrEmpty(input) || IsInvalidFractionalNum(input))
             {
                 return false;
             }
 
-            return IsZero(input);
+            return HaveDigits(input);
         }
 
-        static bool IsZero(string input)
+        static bool HaveDigits(string input)
         {
-            return input == "0";
+            int digitsCount = 0;
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] >= '0' && input[i] <= '9')
+                {
+                    digitsCount++;
+                }
+            }
+
+            return digitsCount == input.Length;
         }
 
         static bool IsNullOrEmpty(string input)
         {
             return string.IsNullOrEmpty(input);
-        }
-
-        static bool StartsWithZero(string input)
-        {
-            return IsNullOrEmpty(input)
-                   || (input.Length > 1 && input[0] == '0' && input[1] != '.');
         }
 
         static bool IsInvalidFractionalNum(string input)
@@ -41,7 +44,7 @@ namespace Json
                 }
             }
 
-            return dots > 1 || input[^1] == '.';
+            return dots > 1;
         }
     }
 }
