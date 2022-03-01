@@ -52,6 +52,9 @@ namespace Json.Facts
         public void DoesNotContainControlCharacters()
         {
             Assert.False(IsJsonString(Quoted("a\nb\rc")));
+            Assert.False(IsJsonString(Quoted("Thisisa\vnewsentence")));
+            Assert.False(IsJsonString(Quoted("^B")));
+
         }
 
         [Fact]

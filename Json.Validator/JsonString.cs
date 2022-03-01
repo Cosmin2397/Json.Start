@@ -6,35 +6,32 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            if (string.IsNullOrEmpty(input) || EndsWithAnUnfinishedHexNumber(input))
+            if (string.IsNullOrEmpty(input) || EndsWithAnUnfinishedHexNumber(input) || ContainsControlChars(input))
             {
                 return false;
             }
 
             return HaveTwoQuotes(input)
-                && ContainsControlChars(input)
                 && ContainsInvalidEscapeChar(input)
                 && EndsWithReverseSolidus(input);
         }
 
         static bool ContainsControlChars(string input)
         {
-            string[] controlChars = { "\n", "\r" };
-            foreach (string c in controlChars)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (input?.Contains(c) != false)
+                if (char.IsControl(input[i]))
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
         static bool ContainsInvalidEscapeChar(string input)
         {
             const string escapeChar = "\"\\/fnbrtu";
-
             for (int i = 0; i < input.Length - 1; i++)
             {
                 int x = 0;
