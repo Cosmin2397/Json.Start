@@ -132,7 +132,9 @@ namespace Json.Facts
         public void DoesNotEndWithReverseSolidus()
         {
             Assert.False(IsJsonString(Quoted(@"a\")));
-            Assert.False(IsJsonString(Quoted(@"cfaofdau1F4Ea\")));
+            Assert.False(IsJsonString(Quoted(@"cF4Ea\")));
+            Assert.False(IsJsonString(Quoted(@"cfaofda\u1F4Ea\")));
+            Assert.False(IsJsonString(Quoted(@"cf\ta\/ofd\na\u1F4Ea\")));
         }
 
         [Fact]
@@ -141,7 +143,7 @@ namespace Json.Facts
             Assert.False(IsJsonString(Quoted(@"a\u")));
             Assert.False(IsJsonString(Quoted(@"a\u123")));
             Assert.False(IsJsonString(Quoted(@"a\u123z")));
-            Assert.True(IsJsonString(Quoted(@"a\u123f")));
+            Assert.True(IsJsonString(Quoted(@"a\u123f\u124B")));
         }
 
         public static string Quoted(string text)

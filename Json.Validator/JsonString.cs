@@ -33,19 +33,31 @@ namespace Json
 
         static bool ContainsValidEscapeChar(string input)
         {
-            char[] escapeChar = { '"', '\\', '/', 'f', 'n', 'b', 'r', 't', 'u' };
-            int indexOfReverseSolidus = input.IndexOf('\\');
-            foreach (char c in escapeChar)
+            bool isValidHex = false;
+            const int escapeCharLength = 2;
+            bool hasEscapeChars = input.Contains('\\');
+            string[] escapeChar = { "\\\"", @"\\", @"\/", @"\f", @"\n", @"\b", @"\r", @"\t", @"\u" };
+            int maxLegth = input.Length - 1;
+            for (int i = 0; i < maxLegth; i++)
             {
-                if ((input[indexOfReverseSolidus + 1] == c
-                    && indexOfReverseSolidus + 1 != input.Length - 1)
-                    || indexOfReverseSolidus == -1)
+                for (int x = 0; x < escapeChar.Length; x++)
                 {
-                    return true;
+                    if (input[i] == '\\' && input.Substring(i, escapeCharLength).Contains(escapeChar[x]))
+                    {
+                        isValidHex = true;
+                    }
+                    else if (!hasEscapeChars)
+                    {
+                        return true;
+                    }
+                    else if (input[i] == '\\' && i == maxLegth - 1)
+                    {
+                        isValidHex = false;
+                    }
                 }
             }
 
-            return false;
+            return isValidHex;
         }
 
         static bool HasStartAndEndQuotes(string input)
