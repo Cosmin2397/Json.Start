@@ -1,19 +1,21 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace Json
 {
     public static class JsonString
     {
+        private static readonly Regex HexRegex = new Regex("([A-Fa-f0-9]{4})$");
+
         public static bool IsJsonString(string input)
         {
-            if (string.IsNullOrEmpty(input) || EndsWithAnUnfinishedHexNumber(input) || ContainsControlChars(input))
+            if (string.IsNullOrEmpty(input) || HasAIncompleteHex(input) || ContainsControlChars(input))
             {
                 return false;
             }
 
-            return HaveTwoQuotes(input)
-                && ContainsInvalidEscapeChar(input)
-                && EndsWithReverseSolidus(input);
+            return HasStartAndEndQuotes(input)
+                && ContainsValidEscapeChar(input);
         }
 
         static bool ContainsControlChars(string input)
@@ -29,57 +31,44 @@ namespace Json
             return false;
         }
 
-        static bool ContainsInvalidEscapeChar(string input)
+        static bool ContainsValidEscapeChar(string input)
         {
-            const string escapeChar = "\"\\/fnbrtu";
-            for (int i = 0; i < input.Length - 1; i++)
+            char[] escapeChar = { '"', '\\', '/', 'f', 'n', 'b', 'r', 't', 'u' };
+            int indexOfReverseSolidus = input.IndexOf('\\');
+            foreach (char c in escapeChar)
             {
-                int x = 0;
-                if (input[i] == '\\')
+                if ((input[indexOfReverseSolidus + 1] == c
+                    && indexOfReverseSolidus + 1 != input.Length - 1)
+                    || indexOfReverseSolidus == -1)
                 {
-                    x++;
+                    return true;
                 }
-
-                if ((x > 0 && escapeChar.Contains(input[i + 1])) || input.IndexOf('\\') == -1)
-                    {
-                        return true;
-                    }
             }
 
             return false;
         }
 
-        static bool HaveTwoQuotes(string input)
+        static bool HasStartAndEndQuotes(string input)
         {
-            if (input == null)
-            {
-                return false;
-            }
-
             return input.StartsWith("\"") && input.EndsWith("\"") && input.Length > 1;
         }
 
-        static bool EndsWithReverseSolidus(string input)
-        {
-            const int lastChar = 2;
-            return input[^lastChar] != '\\';
-        }
-
-        static bool EndsWithAnUnfinishedHexNumber(string input)
-        {
-            const int two = 2;
-            int length = -1;
-            for (int i = 0; i < input.Length - 1; i++)
+        static bool HasAIncompleteHex(string input)
             {
-                if (input[i] == '\\' && input[i + 1] == 'u')
-                {
-                    length = (input.Length - 1) - (i + two);
-                }
+            const int hexLength = 4;
+            int hexIndex = input.IndexOf('u');
+            if (!input.Contains("\\u"))
+            {
+                return false;
+            }
+            else if ((input.Length - 1) - (hexIndex + 1) < hexLength)
+            {
+                return true;
             }
 
-            const int minimumUnicode = 4;
-
-            return length > -1 && length <= minimumUnicode;
+            string hexNum = input.Substring(hexIndex + 1, 4);
+            bool isHex = HexRegex.Match(hexNum).Success;
+            return !isHex;
         }
     }
 }

@@ -45,6 +45,7 @@ namespace Json.Facts
         public void HasStartAndEndQuotes()
         {
             Assert.False(IsJsonString("\""));
+            Assert.True(IsJsonString(Quoted("New input")));
         }
 
 
@@ -53,7 +54,7 @@ namespace Json.Facts
         {
             Assert.False(IsJsonString(Quoted("a\nb\rc")));
             Assert.False(IsJsonString(Quoted("Thisisa\vnewsentence")));
-            Assert.False(IsJsonString(Quoted("^B")));
+            Assert.False(IsJsonString(Quoted("Thisisa\anewsentence")));
 
         }
 
@@ -109,24 +110,29 @@ namespace Json.Facts
         public void CanContainEscapedHorizontalTab()
         {
             Assert.True(IsJsonString(Quoted(@"a \t b")));
+            Assert.True(IsJsonString(Quoted(@"ThisIsA\t")));
         }
 
         [Fact]
         public void CanContainEscapedUnicodeCharacters()
         {
             Assert.True(IsJsonString(Quoted(@"a \u26Be b")));
+            Assert.True(IsJsonString(Quoted(@"a \uFFF4 b")));
+            Assert.False(IsJsonString(Quoted(@"a \uFzF4 b")));
         }
 
         [Fact]
         public void DoesNotContainUnrecognizedExcapceCharacters()
         {
             Assert.False(IsJsonString(Quoted(@"a\x")));
+            Assert.False(IsJsonString(Quoted(@"asfaseaw\M")));
         }
 
         [Fact]
         public void DoesNotEndWithReverseSolidus()
         {
             Assert.False(IsJsonString(Quoted(@"a\")));
+            Assert.False(IsJsonString(Quoted(@"cfaofdau1F4Ea\")));
         }
 
         [Fact]
@@ -134,6 +140,8 @@ namespace Json.Facts
         {
             Assert.False(IsJsonString(Quoted(@"a\u")));
             Assert.False(IsJsonString(Quoted(@"a\u123")));
+            Assert.False(IsJsonString(Quoted(@"a\u123z")));
+            Assert.True(IsJsonString(Quoted(@"a\u123f")));
         }
 
         public static string Quoted(string text)
