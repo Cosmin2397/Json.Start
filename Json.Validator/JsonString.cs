@@ -13,7 +13,7 @@ namespace Json
 
             return HasStartAndEndQuotes(input)
                 && ContainsValidEscapeChar(input)
-                && IsHex(input);
+                && HasAllHexValid(input);
         }
 
         static bool ContainsControlChars(string input)
@@ -70,7 +70,7 @@ namespace Json
                    letter >= 'A' && letter <= 'F';
         }
 
-        static bool IsHex(string input)
+        static bool HasAllHexValid(string input)
         {
             const int hexLength = 4;
             const int firstHexChar = 2;
