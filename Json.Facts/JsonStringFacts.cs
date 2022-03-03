@@ -86,6 +86,7 @@ namespace Json.Facts
         public void CanContainEscapedBackspace()
         {
             Assert.True(IsJsonString(Quoted(@"a \b b")));
+            Assert.False(IsJsonString(Quoted(@"a \m b")));
         }
 
         [Fact]

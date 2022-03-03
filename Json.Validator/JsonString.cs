@@ -38,8 +38,7 @@ namespace Json
             {
                 if (input[i] == '\\' && i == maxLegth - 1)
                 {
-                    isValidHex = false;
-                    break;
+                    return false;
                 }
                 else if (input[i] == '\\' && escapeChar.Contains(input[i + 1]))
                 {
