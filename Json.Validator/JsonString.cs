@@ -18,9 +18,12 @@ namespace Json
 
         static bool ContainsControlChars(string input)
         {
-            for (int i = 0; i < input.Length; i++)
+            const int us = 31;
+            const int dell = 127;
+            const int lastControl = 159;
+            foreach (char c in input)
             {
-                if (char.IsControl(input[i]))
+                if ((c >= 0 && c <= us) || (c >= dell && c <= lastControl))
                 {
                     return true;
                 }
@@ -31,8 +34,12 @@ namespace Json
 
         static bool ContainsValidEscapeChar(string input)
         {
-            bool isValidHex = false;
-            const string escapeChar = "\\\"/bfnrtu";
+            if (!input.Contains('\\'))
+            {
+                return true;
+            }
+
+            const string escapeChar = "\\/bfnrtu\"";
             int maxLegth = input.Length - 1;
             for (int i = 0; i < maxLegth; i++)
             {
@@ -40,17 +47,13 @@ namespace Json
                 {
                     return false;
                 }
-                else if (input[i] == '\\' && escapeChar.Contains(input[i + 1]))
+                else if (input[i] == '\\' && !escapeChar.Contains(input[i + 1]) && input[i - 1] != '\\')
                 {
-                   isValidHex = true;
-                }
-                else if (!input.Contains('\\'))
-                {
-                   return true;
+                    return false;
                 }
             }
 
-            return isValidHex;
+            return true;
         }
 
         static bool HasStartAndEndQuotes(string input)
