@@ -94,6 +94,7 @@ namespace Json
 
         static bool AreValidHexs(string input)
         {
+            string hexNum = "";
             const int escapeChars = 2;
             for (int i = 0; i < input.Length; i++)
             {
@@ -104,11 +105,12 @@ namespace Json
                         return false;
                     }
 
-                    string hexNum = input.Substring(i, escapeChars + HexLength);
-                    if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
-                    {
-                        return false;
-                    }
+                    hexNum = input.Substring(i, escapeChars + HexLength);
+                }
+
+                if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
+                {
+                    return false;
                 }
             }
 
