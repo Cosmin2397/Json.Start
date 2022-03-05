@@ -106,11 +106,10 @@ namespace Json
                     }
 
                     hexNum = input.Substring(i, escapeChars + HexLength);
-                }
-
-                if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
-                {
-                    return false;
+                    if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
+                    {
+                        return false;
+                    }
                 }
             }
 
