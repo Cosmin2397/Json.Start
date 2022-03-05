@@ -53,6 +53,7 @@ namespace Json.Facts
         public void DoesNotContainControlCharacters()
         {
             Assert.False(IsJsonString(Quoted("a\nb\rc")));
+            Assert.False(IsJsonString(Quoted("a\nb\\c")));
 
         }
 
@@ -118,6 +119,13 @@ namespace Json.Facts
             Assert.True(IsJsonString(Quoted(@"a \u26Be b")));
             Assert.True(IsJsonString(Quoted(@"a \uFFF4 b")));
             Assert.False(IsJsonString(Quoted(@"a \uFFF4 b\u12z3")));
+            Assert.True(IsJsonString(Quoted(@"a \uFFF4 b\u12a3 \u321F")));
+        }
+
+        [Fact]
+        public void CanContainAllEscapedCharacters()
+        {
+            Assert.True(IsJsonString(Quoted(@"a \\\\/\b\f\n\r\t\u26Be b")));
         }
 
         [Fact]
@@ -141,8 +149,8 @@ namespace Json.Facts
         {
             Assert.False(IsJsonString(Quoted(@"a\u")));
             Assert.False(IsJsonString(Quoted(@"a\u123")));
-            Assert.False(IsJsonString(Quoted(@"a\u1234\u")));
             Assert.False(IsJsonString(Quoted(@"a\u1GT4")));
+            Assert.False(IsJsonString(Quoted(@"a\u1\u1234")));
             Assert.True(IsJsonString(Quoted(@"a\u0AaF")));
         }
 

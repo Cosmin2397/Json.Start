@@ -4,6 +4,8 @@ namespace Json
 {
     public static class JsonString
     {
+        const int HexLength = 4;
+
         public static bool IsJsonString(string input)
         {
             if (string.IsNullOrEmpty(input) || ContainsControlChars(input))
@@ -13,7 +15,7 @@ namespace Json
 
             return HasStartAndEndQuotes(input)
                 && ContainsValidEscapeChar(input)
-                && HasAllHexValid(input);
+                && AreValidHexs(input);
         }
 
         static bool ContainsControlChars(string input)
@@ -43,7 +45,7 @@ namespace Json
             int maxLegth = input.Length - 1;
             for (int i = 0; i < maxLegth; i++)
             {
-                if (input[i] == '\\' && i == maxLegth - 1)
+                if (input.EndsWith("\\\""))
                 {
                     return false;
                 }
@@ -72,26 +74,38 @@ namespace Json
                    letter >= 'A' && letter <= 'F';
         }
 
-        static bool HasAllHexValid(string input)
+        static bool IsHexChar(char c)
         {
-            const int hexLength = 4;
-            const int firstHexChar = 2;
-            string hexNum = "";
+            return ContainsDigits(c) || ContainsHexLetters(c);
+        }
+
+        static bool IsValidHex(string hexNum)
+        {
+            foreach (char c in hexNum)
+            {
+                if (!IsHexChar(c))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        static bool AreValidHexs(string input)
+        {
+            const int escapeChars = 2;
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] == '\\' && input[i + 1] == 'u')
                 {
-                    if (i + firstHexChar + hexLength > input.Length - 1)
+                    if (i + escapeChars + HexLength > input.Length - 1)
                     {
                         return false;
                     }
 
-                    hexNum = input.Substring(i + firstHexChar, hexLength);
-                }
-
-                foreach (char c in hexNum)
-                {
-                    if (!(ContainsDigits(c) || ContainsHexLetters(c)))
+                    string hexNum = input.Substring(i, escapeChars + HexLength);
+                    if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
                     {
                         return false;
                     }
