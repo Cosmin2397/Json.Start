@@ -5,6 +5,7 @@ namespace Json
     public static class JsonString
     {
         const int HexLength = 4;
+        const int EscapeLength = 2;
 
         public static bool IsJsonString(string input)
         {
@@ -14,18 +15,21 @@ namespace Json
             }
 
             return HasStartAndEndQuotes(input)
-                && ContainsValidEscapeChar(input)
-                && AreValidHexs(input);
+                 && ContainsValidEscapeChar(input[1.. (input.Length - 1)])
+                 && ContainValidQuote(input[1.. (input.Length - 1)]);
+        }
+
+        static int GetReverseSolidusIndex(string input)
+        {
+            return input.IndexOf('\\');
         }
 
         static bool ContainsControlChars(string input)
         {
-            const int us = 31;
-            const int dell = 127;
-            const int lastControl = 159;
+            const int space = 32;
             foreach (char c in input)
             {
-                if ((c >= 0 && c <= us) || (c >= dell && c <= lastControl))
+                if (c < space)
                 {
                     return true;
                 }
@@ -34,28 +38,45 @@ namespace Json
             return false;
         }
 
-        static bool ContainsValidEscapeChar(string input)
+        static bool ContainValidQuote(string input)
         {
-            if (!input.Contains('\\'))
+            int indexOfQuote = input.IndexOf('"');
+            if (indexOfQuote == -1)
             {
                 return true;
             }
-
-            const string escapeChar = "\\/bfnrtu\"";
-            int maxLegth = input.Length - 1;
-            for (int i = 0; i < maxLegth; i++)
+            else if (input[indexOfQuote - 1] != '\\')
             {
-                if (input.EndsWith("\\\""))
-                {
-                    return false;
-                }
-                else if (input[i] == '\\' && !escapeChar.Contains(input[i + 1]) && input[i - 1] != '\\')
-                {
-                    return false;
-                }
+                return false;
             }
 
+            ContainValidQuote(input[(indexOfQuote + 1) ..]);
             return true;
+        }
+
+        static bool ContainsEscapeCharacter(char escape)
+        {
+            char[] escapedChars = { '"', '\\', '/', 'b', 'f', 'n', 'r', 't' };
+            return Array.IndexOf(escapedChars, escape) != -1;
+        }
+
+        static bool ContainsValidEscapeChar(string input)
+        {
+            int indexOfReverseSolidus = GetReverseSolidusIndex(input);
+            if (indexOfReverseSolidus == -1)
+            {
+                return true;
+            }
+            else if (indexOfReverseSolidus >= input.Length - 1)
+            {
+                return false;
+            }
+            else if (!(ContainsEscapeCharacter(input[indexOfReverseSolidus + 1]) || AreValidHexs(input[(indexOfReverseSolidus + 1) ..])))
+            {
+                return false;
+            }
+
+            return ContainsValidEscapeChar(input[(indexOfReverseSolidus + EscapeLength) ..]);
         }
 
         static bool HasStartAndEndQuotes(string input)
@@ -95,23 +116,18 @@ namespace Json
         static bool AreValidHexs(string input)
         {
             string hexNum = "";
-            const int escapeChars = 2;
-            for (int i = 0; i < input.Length; i++)
+            if (input[0] != 'u' || input.Length - 1 < HexLength)
             {
-                if (input[i] == '\\' && input[i + 1] == 'u')
+                return false;
+            }
+            else if (input[0] == 'u')
                 {
-                    if (i + escapeChars + HexLength > input.Length - 1)
-                    {
-                        return false;
-                    }
-
-                    hexNum = input.Substring(i, escapeChars + HexLength);
-                    if (!ContainsValidEscapeChar(hexNum) || !IsValidHex(hexNum.Substring(escapeChars)))
+                    hexNum = input[1.. (HexLength + 1)];
+                    if (!IsValidHex(hexNum))
                     {
                         return false;
                     }
                 }
-            }
 
             return true;
         }

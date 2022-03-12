@@ -54,7 +54,24 @@ namespace Json.Facts
         {
             Assert.False(IsJsonString(Quoted("a\nb\rc")));
             Assert.False(IsJsonString(Quoted("a\nb\\c")));
+            Assert.False(IsJsonString(Quoted("a\\c")));
+            Assert.False(IsJsonString(Quoted("a\"\"c")));
+        }
 
+        [Fact]
+        public void DoesNotContainInvalidQuote()
+        {
+            Assert.False(IsJsonString(Quoted("a\"c")));
+            Assert.False(IsJsonString(Quoted("a\"\"c")));
+            Assert.True(IsJsonString(Quoted(@"a\""c")));
+        }
+
+        [Fact]
+        public void DoesNotContainInvalidReverseSolidus()
+        {
+            Assert.False(IsJsonString(Quoted("a\\c")));
+            Assert.False(IsJsonString(Quoted("a\\fca\\c")));
+            Assert.False(IsJsonString(Quoted("a\\afe\\bc")));
         }
 
         [Fact]
@@ -66,7 +83,7 @@ namespace Json.Facts
         [Fact]
         public void CanContainEscapedQuotationMark()
         {
-            Assert.True(IsJsonString(Quoted(@"\""a\"" b")));
+            Assert.True(IsJsonString(Quoted(@"\""a\""b")));
         }
 
         [Fact]
@@ -85,7 +102,6 @@ namespace Json.Facts
         public void CanContainEscapedBackspace()
         {
             Assert.True(IsJsonString(Quoted(@"a \b b")));
-            Assert.False(IsJsonString(Quoted(@"a \m b")));
         }
 
         [Fact]
@@ -119,6 +135,7 @@ namespace Json.Facts
             Assert.True(IsJsonString(Quoted(@"a \u26Be b")));
             Assert.True(IsJsonString(Quoted(@"a \uFFF4 b")));
             Assert.False(IsJsonString(Quoted(@"a \uFFF4 b\u12z3")));
+            Assert.False(IsJsonString(Quoted(@"a \uqFF4 b\u1243 \u1243 \u12ab \u34eF")));
             Assert.True(IsJsonString(Quoted(@"a \uFFF4 b\u12a3 \u321F")));
         }
 
@@ -132,7 +149,6 @@ namespace Json.Facts
         public void DoesNotContainUnrecognizedExcapceCharacters()
         {
             Assert.False(IsJsonString(Quoted(@"a\x")));
-            Assert.False(IsJsonString(Quoted(@"asfaseaw\M")));
         }
 
         [Fact]
@@ -151,7 +167,7 @@ namespace Json.Facts
             Assert.False(IsJsonString(Quoted(@"a\u123")));
             Assert.False(IsJsonString(Quoted(@"a\u1GT4")));
             Assert.False(IsJsonString(Quoted(@"a\u1\u1234")));
-            Assert.True(IsJsonString(Quoted(@"a\u0AaF")));
+            Assert.True(IsJsonString(Quoted(@"a\u0AaF\u1234")));
         }
 
         public static string Quoted(string text)
