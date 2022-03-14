@@ -62,6 +62,7 @@ namespace Json.Facts
         {
             Assert.False(IsJsonString(Quoted("a\"c")));
             Assert.False(IsJsonString(Quoted("a\"\"c")));
+            Assert.False(IsJsonString(Quoted("a\\b\"c")));
             Assert.True(IsJsonString(Quoted(@"a\""c")));
         }
 

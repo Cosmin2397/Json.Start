@@ -54,16 +54,18 @@ namespace Json
             {
                 return true;
             }
-            else if (indexOfReverseSolidus >= input.Length - 1)
-            {
-                return false;
-            }
-            else if (!(ContainsEscapeCharacter(input[indexOfReverseSolidus + 1]) || AreValidHexs(input[(indexOfReverseSolidus + 1) ..])))
+            else if (indexOfReverseSolidus == -1 && ContainsQuotationMark(input))
             {
                 return false;
             }
 
-            return ContainsValidEscapeChar(input[(indexOfReverseSolidus + EscapeLength) ..]);
+            if (indexOfReverseSolidus >= input.Length - 1 || !(ContainsEscapeCharacter(input[indexOfReverseSolidus + 1]) || AreValidHexs(input[(indexOfReverseSolidus + 1) ..])))
+            {
+                return false;
+            }
+
+            ContainsValidEscapeChar(input[(indexOfReverseSolidus + EscapeLength) ..]);
+            return true;
         }
 
         static bool HasStartAndEndQuotes(string input)
