@@ -64,8 +64,7 @@ namespace Json
                 return false;
             }
 
-            ContainsValidEscapeChar(input[(indexOfReverseSolidus + EscapeLength) ..]);
-            return true;
+            return ContainsValidEscapeChar(input[(indexOfReverseSolidus + EscapeLength) ..]);
         }
 
         static bool HasStartAndEndQuotes(string input)
