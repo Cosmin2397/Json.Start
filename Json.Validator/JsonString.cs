@@ -15,8 +15,7 @@ namespace Json
             }
 
             return HasStartAndEndQuotes(input)
-                 && ContainsValidEscapeChar(input[1.. (input.Length - 1)])
-                 && ContainValidQuote(input[1.. (input.Length - 1)]);
+                 && ContainsValidEscapeChar(input[1.. (input.Length - 1)]);
         }
 
         static int GetReverseSolidusIndex(string input)
@@ -24,12 +23,16 @@ namespace Json
             return input.IndexOf('\\');
         }
 
+        static bool ContainsQuotationMark(string input)
+        {
+            return input.IndexOf('"') != -1;
+        }
+
         static bool ContainsControlChars(string input)
         {
-            const int space = 32;
             foreach (char c in input)
             {
-                if (c < space)
+                if (c < ' ')
                 {
                     return true;
                 }
@@ -38,32 +41,16 @@ namespace Json
             return false;
         }
 
-        static bool ContainValidQuote(string input)
-        {
-            int indexOfQuote = input.IndexOf('"');
-            if (indexOfQuote == -1)
-            {
-                return true;
-            }
-            else if (input[indexOfQuote - 1] != '\\')
-            {
-                return false;
-            }
-
-            ContainValidQuote(input[(indexOfQuote + 1) ..]);
-            return true;
-        }
-
         static bool ContainsEscapeCharacter(char escape)
         {
-            char[] escapedChars = { '"', '\\', '/', 'b', 'f', 'n', 'r', 't' };
-            return Array.IndexOf(escapedChars, escape) != -1;
+            const string escapedChars = @"\""\\/bfnrt";
+            return escapedChars.Contains(escape);
         }
 
         static bool ContainsValidEscapeChar(string input)
         {
             int indexOfReverseSolidus = GetReverseSolidusIndex(input);
-            if (indexOfReverseSolidus == -1)
+            if (indexOfReverseSolidus == -1 && !ContainsQuotationMark(input))
             {
                 return true;
             }
@@ -115,21 +102,12 @@ namespace Json
 
         static bool AreValidHexs(string input)
         {
-            string hexNum = "";
             if (input[0] != 'u' || input.Length - 1 < HexLength)
             {
                 return false;
             }
-            else if (input[0] == 'u')
-                {
-                    hexNum = input[1.. (HexLength + 1)];
-                    if (!IsValidHex(hexNum))
-                    {
-                        return false;
-                    }
-                }
 
-            return true;
+            return IsValidHex(input[1.. (HexLength + 1)]);
         }
     }
 }
