@@ -170,5 +170,18 @@ namespace Json.Facts
             Assert.False(IsJsonNumber(nan));
         }
 
+        [Fact]
+        public void CanBeMaxNumber()
+        {
+            string maxValue = double.MaxValue.ToString();
+            Assert.True(IsJsonNumber(maxValue));
+        }
+
+        [Fact]
+        public void CanBeMinNumber()
+        {
+            string minValue = double.MinValue.ToString();
+            Assert.True(IsJsonNumber(minValue));
+        }
     }
 }
