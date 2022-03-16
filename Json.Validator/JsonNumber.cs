@@ -6,45 +6,16 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (IsNullOrEmpty(input) || IsInvalidFractionalNum(input) || DoesStartWithZero(input))
+            if (IsNullOrEmpty(input))
             {
                 return false;
             }
 
-            return HaveCharsAndDigits(input)
-                && IsValidExponent(input)
-                && ExponentIsComplete(input)
-                && ExponentIsAfterFraction(input);
-        }
-
-        static int HaveDigits(string input)
-        {
-            int digitsCount = 0;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i] >= '0' && input[i] <= '9')
-                {
-                    digitsCount++;
-                }
-            }
-
-            return digitsCount;
-        }
-
-        static bool HaveCharsAndDigits(string input)
-        {
-            int charCount = 0;
-            int digitsCount = HaveDigits(input);
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i] == '-' || input[i] == '+' || input[i] == '.' || char.ToLower(input[i]) == 'e')
-                {
-                    charCount++;
-                }
-            }
-
-            return charCount + digitsCount == input.Length;
+            int dotIndex = input.IndexOf('.');
+            int exponentIndex = input.ToLower().IndexOf('e');
+            return IsValidInteger(Integer(input, dotIndex, exponentIndex))
+                && IsValidFraction(Fraction(input, dotIndex, exponentIndex))
+                && IsValidExponent(Exponent(input, exponentIndex));
         }
 
         static bool IsNullOrEmpty(string input)
@@ -52,84 +23,101 @@ namespace Json
             return string.IsNullOrEmpty(input);
         }
 
-        static bool DoesStartWithZero(string input)
+        static bool ContainsDigits(string input)
         {
-            if (input.Length <= 1 || IsAFraction(input))
+            if (IsNullOrEmpty(input))
             {
                 return false;
             }
 
-            return input[0] == '0';
-        }
-
-        static bool IsAFraction(string input)
-        {
-            return input.Contains('.');
-        }
-
-        static bool IsInvalidFractionalNum(string input)
-        {
-            const int endWithDot = 2;
-            int dots = 0;
-            for (int i = 0; i < input.Length; ++i)
+            foreach (char c in input)
             {
-                if (input[i] == '.')
+                if (c < '0' || c > '9')
                 {
-                    dots++;
-                }
-                else if (input[^1] == '.')
-                {
-                    dots += endWithDot;
-                }
-            }
-
-            return dots > 1;
-        }
-
-        static bool IsValidExponent(string input)
-        {
-            int exponent = 0;
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (char.ToLower(input[i]) == 'e')
-                {
-                    exponent++;
-                }
-            }
-
-            return exponent <= 1;
-        }
-
-        static bool ExponentIsComplete(string input)
-        {
-            for (int i = 0; i < input.Length; ++i)
-            {
-                if (char.ToLower(input[i]) == 'e')
-                {
-                    return HaveDigits(input.Substring(i)) > 0;
+                    return false;
                 }
             }
 
             return true;
         }
 
-        static bool HaveExponentAndFraction(string input)
+        static bool StartsWithMinus(string input)
         {
-            return input.Contains('.') && input.Contains('e');
+            return input.Length > 1
+                && input.StartsWith('-')
+                && ContainsDigits(input[1..]);
         }
 
-        static bool ExponentIsAfterFraction(string input)
+        static bool StartsWithPlus(string input)
         {
-            if (HaveExponentAndFraction(input))
+            return input.Length > 1
+                && input.StartsWith('+')
+                && ContainsDigits(input[1..]);
+        }
+
+        static string Integer(string input, int dotIndex, int exponentIndex)
+        {
+            if (dotIndex != -1 && (exponentIndex < 0 || exponentIndex > dotIndex))
             {
-                return input.IndexOf('e') > input.IndexOf('.');
+                return input[0.. dotIndex];
             }
-            else if (!HaveExponentAndFraction(input))
+            else if (dotIndex == -1 && exponentIndex != -1)
             {
-                return true;
+                return input[0..exponentIndex];
             }
 
-            return false;
+            return input;
+        }
+
+        static string Fraction(string input, int dotIndex, int exponentIndex)
+        {
+            if (dotIndex != -1 && exponentIndex == -1)
+            {
+                return input[(dotIndex + 1) ..];
+            }
+            else if (dotIndex != -1 && exponentIndex > dotIndex)
+            {
+                return input[(dotIndex + 1) ..exponentIndex];
+            }
+
+            return "1";
+        }
+
+        static string Exponent(string input, int exponentIndex)
+        {
+            if (exponentIndex != -1)
+            {
+                return input[(exponentIndex + 1) ..];
+            }
+
+            return "1";
+        }
+
+        static bool IsValidInteger(string integer)
+        {
+            if (integer.Length > 1 && integer[0] == '0')
+            {
+                return false;
+            }
+
+            return ContainsDigits(integer) || StartsWithMinus(integer);
+        }
+
+        static bool IsValidFraction(string integer)
+        {
+            return ContainsDigits(integer);
+        }
+
+        static bool IsValidExponent(string integer)
+        {
+            if (string.IsNullOrEmpty(integer))
+            {
+                return false;
+            }
+
+            return ContainsDigits(integer)
+                || StartsWithMinus(integer)
+                || StartsWithPlus(integer);
         }
     }
 }
