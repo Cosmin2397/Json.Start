@@ -115,11 +115,6 @@ namespace Json
 
         static bool IsValidExponent(string integer)
         {
-            if (string.IsNullOrEmpty(integer))
-            {
-                return false;
-            }
-
             return ContainsDigits(integer)
                 || StartWithValidChar(integer);
         }

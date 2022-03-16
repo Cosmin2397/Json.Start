@@ -144,7 +144,31 @@ namespace Json.Facts
         [Fact]
         public void TheExponentIsAfterTheFraction()
         {
+            string infinity = double.PositiveInfinity.ToString();
             Assert.False(IsJsonNumber("22e3.3"));
+            Assert.False(IsJsonNumber(infinity));
         }
+
+        [Fact]
+        public void TheNumberIsNotPositiveInfinity()
+        {
+            string infinity = double.PositiveInfinity.ToString();
+            Assert.False(IsJsonNumber(infinity));
+        }
+
+        [Fact]
+        public void TheNumberIsNotNegativeInfinity()
+        {
+            string infinity = double.NegativeInfinity.ToString();
+            Assert.False(IsJsonNumber(infinity));
+        }
+
+        [Fact]
+        public void TheNumberIsNotANaN()
+        {
+            string nan = double.NaN.ToString();
+            Assert.False(IsJsonNumber(nan));
+        }
+
     }
 }
