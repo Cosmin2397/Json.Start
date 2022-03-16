@@ -55,6 +55,11 @@ namespace Json
                 && ContainsDigits(input[1..]);
         }
 
+        static bool StartWithValidChar(string input)
+        {
+            return StartsWithPlus(input) || StartsWithMinus(input);
+        }
+
         static string Integer(string input, int dotIndex, int exponentIndex)
         {
             if (dotIndex != -1 && (exponentIndex < 0 || exponentIndex > dotIndex))
@@ -116,8 +121,7 @@ namespace Json
             }
 
             return ContainsDigits(integer)
-                || StartsWithMinus(integer)
-                || StartsWithPlus(integer);
+                || StartWithValidChar(integer);
         }
     }
 }
