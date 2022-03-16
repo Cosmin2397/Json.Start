@@ -98,6 +98,25 @@ namespace Json.Facts
         }
 
         [Fact]
+        public void CanHaveAnExponentWithMultipleDigits()
+        {
+            Assert.True(IsJsonNumber("12e33552"));
+            Assert.True(IsJsonNumber("12.12e33552"));
+        }
+
+        [Fact]
+        public void ExponentIsNotRightAfterDot()
+        {
+            Assert.False(IsJsonNumber("12.e33552"));
+        }
+
+        [Fact]
+        public void ExponentIsNotRightBeforeDot()
+        {
+            Assert.False(IsJsonNumber("12e.33552"));
+        }
+
+        [Fact]
         public void TheExponentCanStartWithCapitalE()
         {
             Assert.True(IsJsonNumber("12E3"));
