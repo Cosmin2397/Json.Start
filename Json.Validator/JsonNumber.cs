@@ -4,6 +4,8 @@ namespace Json
 {
     public static class JsonNumber
     {
+        static int firstDigitAfterSigns = 2;
+
         public static bool IsJsonNumber(string input)
         {
             if (IsNullOrEmpty(input))
@@ -41,61 +43,47 @@ namespace Json
             return true;
         }
 
-        static bool StartsWithMinus(string input)
-        {
-            return input.Length > 1
-                && input.StartsWith('-')
-                && ContainsDigits(input[1..]);
-        }
-
-        static bool StartsWithPlus(string input)
-        {
-            return input.Length > 1
-                && input.StartsWith('+')
-                && ContainsDigits(input[1..]);
-        }
-
         static bool StartWithValidChar(string input)
         {
-            return StartsWithPlus(input) || StartsWithMinus(input);
+            return input.StartsWith('-') || input.StartsWith('+');
         }
 
         static string Integer(string input, int dotIndex, int exponentIndex)
         {
-            if (dotIndex != -1 && (exponentIndex < 0 || exponentIndex > dotIndex))
+            if (dotIndex == -1 && exponentIndex == -1)
             {
-                return input[0.. dotIndex];
+                return input;
             }
             else if (dotIndex == -1 && exponentIndex != -1)
             {
                 return input[0..exponentIndex];
             }
 
-            return input;
+            return input[0.. dotIndex];
         }
 
         static string Fraction(string input, int dotIndex, int exponentIndex)
         {
-            if (dotIndex != -1 && exponentIndex == -1)
+            if (dotIndex == -1)
             {
-                return input[(dotIndex + 1) ..];
+                return string.Empty;
             }
-            else if (dotIndex != -1 && exponentIndex > dotIndex)
+            else if (exponentIndex > dotIndex)
             {
-                return input[(dotIndex + 1) ..exponentIndex];
+                return input[dotIndex ..exponentIndex];
             }
 
-            return "1";
+            return input[dotIndex..];
         }
 
         static string Exponent(string input, int exponentIndex)
         {
-            if (exponentIndex != -1)
+            if (exponentIndex == -1)
             {
-                return input[(exponentIndex + 1) ..];
+                return string.Empty;
             }
 
-            return "1";
+            return input[exponentIndex..];
         }
 
         static bool IsValidInteger(string integer)
@@ -105,18 +93,31 @@ namespace Json
                 return false;
             }
 
-            return ContainsDigits(integer) || StartsWithMinus(integer);
+            return ContainsDigits(integer) ||
+                (integer.StartsWith('-')
+                && ContainsDigits(integer[1..]));
         }
 
-        static bool IsValidFraction(string integer)
+        static bool IsValidFraction(string fraction)
         {
-            return ContainsDigits(integer);
+            if (fraction.Length == 0)
+            {
+                return true;
+            }
+
+            return ContainsDigits(fraction[1..]);
         }
 
-        static bool IsValidExponent(string integer)
+        static bool IsValidExponent(string exponent)
         {
-            return ContainsDigits(integer)
-                || StartWithValidChar(integer);
+            if (exponent.Length == 0)
+            {
+                return true;
+            }
+
+            return ContainsDigits(exponent[1..])
+                || (StartWithValidChar(exponent[1..])
+                && ContainsDigits(exponent[firstDigitAfterSigns..]));
         }
     }
 }
