@@ -4,8 +4,6 @@ namespace Json
 {
     public static class JsonNumber
     {
-        static int firstDigitAfterSigns = 2;
-
         public static bool IsJsonNumber(string input)
         {
             if (IsNullOrEmpty(input))
@@ -25,7 +23,7 @@ namespace Json
             return string.IsNullOrEmpty(input);
         }
 
-        static bool ContainsDigits(string input)
+        static bool ContainsOnlyDigits(string input)
         {
             if (IsNullOrEmpty(input))
             {
@@ -43,9 +41,24 @@ namespace Json
             return true;
         }
 
+        static bool StartWithMinus(string input)
+        {
+            return input.StartsWith('-');
+        }
+
         static bool StartWithValidChar(string input)
         {
-            return input.StartsWith('-') || input.StartsWith('+');
+            return StartWithMinus(input) || input.StartsWith('+');
+        }
+
+        static bool IsNegativeInteger(string input)
+        {
+            return StartWithMinus(input) && ContainsOnlyDigits(input[1..]);
+        }
+
+        static bool IsPlusMinusExponent(string input)
+        {
+            return StartWithValidChar(input) && ContainsOnlyDigits(input[1..]);
         }
 
         static string Integer(string input, int dotIndex, int exponentIndex)
@@ -54,7 +67,8 @@ namespace Json
             {
                 return input;
             }
-            else if (dotIndex == -1 && exponentIndex != -1)
+
+            if (dotIndex == -1 && exponentIndex != -1)
             {
                 return input[0..exponentIndex];
             }
@@ -68,7 +82,8 @@ namespace Json
             {
                 return string.Empty;
             }
-            else if (exponentIndex > dotIndex)
+
+            if (exponentIndex != -1)
             {
                 return input[dotIndex ..exponentIndex];
             }
@@ -93,9 +108,8 @@ namespace Json
                 return false;
             }
 
-            return ContainsDigits(integer) ||
-                (integer.StartsWith('-')
-                && ContainsDigits(integer[1..]));
+            return ContainsOnlyDigits(integer) ||
+                IsNegativeInteger(integer);
         }
 
         static bool IsValidFraction(string fraction)
@@ -105,7 +119,8 @@ namespace Json
                 return true;
             }
 
-            return ContainsDigits(fraction[1..]);
+            fraction = fraction[1..];
+            return ContainsOnlyDigits(fraction);
         }
 
         static bool IsValidExponent(string exponent)
@@ -115,9 +130,9 @@ namespace Json
                 return true;
             }
 
-            return ContainsDigits(exponent[1..])
-                || (StartWithValidChar(exponent[1..])
-                && ContainsDigits(exponent[firstDigitAfterSigns..]));
+            exponent = exponent[1..];
+            return ContainsOnlyDigits(exponent)
+                || IsPlusMinusExponent(exponent);
         }
     }
 }
