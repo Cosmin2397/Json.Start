@@ -41,26 +41,6 @@ namespace Json
             return true;
         }
 
-        static bool StartWithMinus(string input)
-        {
-            return input.StartsWith('-');
-        }
-
-        static bool StartWithValidChar(string input)
-        {
-            return StartWithMinus(input) || input.StartsWith('+');
-        }
-
-        static bool IsNegativeInteger(string input)
-        {
-            return StartWithMinus(input) && ContainsOnlyDigits(input[1..]);
-        }
-
-        static bool IsPlusMinusExponent(string input)
-        {
-            return StartWithValidChar(input) && ContainsOnlyDigits(input[1..]);
-        }
-
         static string Integer(string input, int dotIndex, int exponentIndex)
         {
             if (dotIndex != -1)
