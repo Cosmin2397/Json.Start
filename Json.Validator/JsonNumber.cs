@@ -63,17 +63,17 @@ namespace Json
 
         static string Integer(string input, int dotIndex, int exponentIndex)
         {
-            if (dotIndex == -1 && exponentIndex == -1)
+            if (dotIndex != -1)
             {
-                return input;
+                return input[..dotIndex];
             }
 
-            if (dotIndex == -1 && exponentIndex != -1)
+            if (exponentIndex != -1)
             {
-                return input[0..exponentIndex];
+                 return input[..exponentIndex];
             }
 
-            return input[0.. dotIndex];
+            return input;
         }
 
         static string Fraction(string input, int dotIndex, int exponentIndex)
@@ -108,8 +108,12 @@ namespace Json
                 return false;
             }
 
-            return ContainsOnlyDigits(integer) ||
-                IsNegativeInteger(integer);
+            if (integer.StartsWith('-'))
+            {
+                integer = integer[1..];
+            }
+
+            return ContainsOnlyDigits(integer);
         }
 
         static bool IsValidFraction(string fraction)
@@ -131,8 +135,12 @@ namespace Json
             }
 
             exponent = exponent[1..];
-            return ContainsOnlyDigits(exponent)
-                || IsPlusMinusExponent(exponent);
+            if (exponent.StartsWith('-') || exponent.StartsWith('+'))
+            {
+                exponent = exponent[1..];
+            }
+
+            return ContainsOnlyDigits(exponent);
         }
     }
 }
