@@ -16,6 +16,19 @@ namespace Ranking
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }
 
+        public string GetTeamByName(string name)
+        {
+            for (int i = 0; i < teams.Length; i++)
+            {
+                if (teams[i].IsTeamName(name))
+                {
+                    return teams[i].ShowTeam(i);
+                }
+            }
+
+            return "Invalid team";
+        }
+
         public string[] AddNewTeam(string name, int points)
         {
             Array.Resize(ref teams, teams.Length + 1);
