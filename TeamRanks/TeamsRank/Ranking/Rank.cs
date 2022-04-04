@@ -16,6 +16,17 @@ namespace Ranking
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }
 
+        public string[] ShowRank(SoccerTeam[] teams)
+        {
+            string[] ranks = new string[teams.Length];
+            for (int i = 0; i < teams.Length; i++)
+            {
+                ranks[i] = teams[i].ShowTeam(i);
+            }
+
+            return ranks;
+        }
+
         private void SortTeams(SoccerTeam[] teams)
         {
             for (int j = 0; j < teams.Length - 1; j++)
