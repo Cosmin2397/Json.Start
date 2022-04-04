@@ -67,7 +67,7 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void CheckIfaTeamHaveMorePointsThanOtherTeam()
+        public static void CheckIfaTeamHaveMorePointsThanOtherTeam_IsFalse()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
             SoccerTeam team2 = new SoccerTeam("Dinamo", 20);
@@ -76,11 +76,53 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void CheckIfaTeamHaveSameNameAsOtherTeam()
+        public static void CheckIfaTeamHaveMorePointsThanOtherTeam_IsTrue()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 20);
+            SoccerTeam team2 = new SoccerTeam("Dinamo", 25);
+            bool actual = team.HaveFewerPoints(team2);
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public static void CheckIfaTeamHaveMorePointsThanOtherTeam__Equal_IsFalse()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 20);
+            SoccerTeam team2 = new SoccerTeam("Dinamo", 20);
+            bool actual = team.HaveFewerPoints(team2);
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public static void CheckIfaTeamHaveSameNameAsOtherTeam_IsTrue()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
             bool actual = team.IsTeamName("Steaua");
             Assert.True(actual);
+        }
+
+        [Fact]
+        public static void CheckIfaTeamHaveSameNameAsOtherTeam_IsFalse()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            bool actual = team.IsTeamName("steaua");
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public static void CheckIfaTeamHaveSameNameAsOtherTeam_Null_IsFalse()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            bool actual = team.IsTeamName(null);
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public static void CheckIfaTeamHaveSameNameAsOtherTeam_EmptyString_IsFalse()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            bool actual = team.IsTeamName(string.Empty);
+            Assert.False(actual);
         }
 
         [Fact]

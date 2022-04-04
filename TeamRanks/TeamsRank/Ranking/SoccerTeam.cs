@@ -34,6 +34,11 @@ namespace Ranking
 
         public bool IsTeamName(string teamName)
         {
+            if (string.IsNullOrEmpty(teamName))
+            {
+                return false;
+            }
+
             return teamName == name;
         }
 
