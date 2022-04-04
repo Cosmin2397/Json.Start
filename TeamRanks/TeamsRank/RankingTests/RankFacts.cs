@@ -294,7 +294,7 @@ namespace RankingTests
             Assert.Equal(actual, expected);
         }
         [Fact]
-        public static void AddNewMatch()
+        public static void AddNewMatch_FirstTeamWin()
         {
             SoccerTeam[] teamsRank = new SoccerTeam[2]
         {
@@ -307,6 +307,127 @@ namespace RankingTests
             string[] expected =
             {
             "1. Steaua 28",
+            "2. Dinamo 20",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddNewMatch_SecondTeamWin()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 2);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 25",
+            "2. Dinamo 23",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddTwoGames()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 2);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 0);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 28",
+            "2. Dinamo 23",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddNewMatch_Equal()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 0);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 26",
+            "2. Dinamo 21",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddNewMatch_FirstTeamHaveNegativeScore()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], -1, 0);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 25",
+            "2. Dinamo 20",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddNewMatch_SecondTeamHaveNegativeScore()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, -3);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 25",
+            "2. Dinamo 20",
+            };
+
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void AddNewMatch_BothTeamsHaveNegativeScore()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], -1, -3);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 25",
             "2. Dinamo 20",
             };
 

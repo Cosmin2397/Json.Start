@@ -48,18 +48,21 @@ namespace Ranking
 
         public void AddNewMatch(SoccerTeam teamOne, SoccerTeam teamTwo, int teamOneGoals, int teamTwoGoals)
         {
-            if (teamOneGoals > teamTwoGoals)
+            if (teamOneGoals >= 0 && teamTwoGoals >= 0)
             {
-                teamOne.AddPoints(winnerPoints);
-            }
-            else if (teamTwoGoals > teamOneGoals)
-            {
-                teamTwo.AddPoints(winnerPoints);
-            }
-            else
-            {
-                teamOne.AddPoints(1);
-                teamTwo.AddPoints(1);
+                if (teamOneGoals > teamTwoGoals)
+                {
+                    teamOne.AddPoints(winnerPoints);
+                }
+                else if (teamTwoGoals > teamOneGoals)
+                {
+                    teamTwo.AddPoints(winnerPoints);
+                }
+                else
+                {
+                    teamOne.AddPoints(1);
+                    teamTwo.AddPoints(1);
+                }
             }
 
             SortTeams(teams);
