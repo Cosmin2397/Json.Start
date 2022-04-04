@@ -43,7 +43,12 @@ namespace Ranking
         }
 
         public void AddPoints(int pointsToAdd)
-        {
+            {
+            if (pointsToAdd <= 0)
+            {
+                return;
+            }
+
             this.teamPoints += pointsToAdd;
         }
     }

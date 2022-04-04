@@ -134,5 +134,45 @@ namespace RankingTests
             string expected = "1. Steaua 26";
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public static void AddThreePointsToATeam()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            team.AddPoints(3);
+            string actual = team.ShowTeam(0);
+            string expected = "1. Steaua 28";
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public static void AddTenPointsToATeam()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            team.AddPoints(10);
+            string actual = team.ShowTeam(0);
+            string expected = "1. Steaua 35";
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public static void DecreaseThreePointsToATeam()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            team.AddPoints(-3);
+            string actual = team.ShowTeam(0);
+            string expected = "1. Steaua 25";
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public static void AddZeroToTeamPoints()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            team.AddPoints(0);
+            string actual = team.ShowTeam(0);
+            string expected = "1. Steaua 25";
+            Assert.Equal(expected, actual);
+        }
     }
 }
