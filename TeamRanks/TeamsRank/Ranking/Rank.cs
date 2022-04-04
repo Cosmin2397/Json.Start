@@ -54,6 +54,8 @@ namespace Ranking
                 teamOne.AddPoints(1);
                 teamTwo.AddPoints(1);
             }
+
+            SortTeams(teams);
         }
 
         public string[] ShowRank(SoccerTeam[] teams)
