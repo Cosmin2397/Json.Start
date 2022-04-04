@@ -15,5 +15,21 @@ namespace Ranking
         {
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }
+
+        private void SortTeams(SoccerTeam[] teams)
+        {
+            for (int j = 0; j < teams.Length - 1; j++)
+            {
+                for (int i = 0; i < teams.Length - 1; i++)
+                {
+                    if (teams[i].HaveFewerPoints(teams[i + 1]))
+                    {
+                        SoccerTeam temp = teams[i + 1];
+                        teams[i + 1] = teams[i];
+                        teams[i] = temp;
+                    }
+                }
+            }
+        }
     }
 }
