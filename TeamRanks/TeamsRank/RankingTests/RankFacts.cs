@@ -52,5 +52,25 @@ namespace RankingTests
             string expected = "1. Steaua 25";
             Assert.Equal(actual, expected);
         }
+
+        [Fact]
+        public static void AddNewMatch()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 0);
+            string[] actual = rank.ShowRank(teamsRank);
+            string[] expected =
+            {
+            "1. Steaua 28",
+            "2. Dinamo 20",
+            };
+
+            Assert.Equal(actual, expected);
+        }
     }
 }
