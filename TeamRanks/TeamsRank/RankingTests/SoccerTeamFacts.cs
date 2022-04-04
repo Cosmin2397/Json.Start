@@ -20,6 +20,53 @@ namespace RankingTests
         }
 
         [Fact]
+        public static void ShowATeam_InATwoTeamsArray()
+        {
+            SoccerTeam[] teams = new SoccerTeam[2]
+             {
+                new SoccerTeam("Steaua", 25),
+                new SoccerTeam("CFR Cluj", 14),
+            };
+
+            string actual = teams[1].ShowTeam(1);
+            string expected = "2. CFR Cluj 14";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void ShowATeam_InAFourTeamsArray()
+        {
+            SoccerTeam[] teams = new SoccerTeam[4]
+             {
+                new SoccerTeam("Steaua", 38),
+                new SoccerTeam("CFR Cluj", 30),
+                new SoccerTeam("Uta", 25),
+                new SoccerTeam("Mioveni", 14),
+            };
+
+            string actual = teams[3].ShowTeam(3);
+            string expected = "4. Mioveni 14";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void ShowATeam_InAFiveTeamsArray()
+        {
+            SoccerTeam[] teams = new SoccerTeam[5]
+             {
+                new SoccerTeam("Steaua", 38),
+                new SoccerTeam("CFR Cluj", 30),
+                new SoccerTeam("Uta", 25),
+                new SoccerTeam("Mioveni", 14),
+                new SoccerTeam("Rapid", 5)
+            };
+
+            string actual = teams[2].ShowTeam(2);
+            string expected = "3. Uta 25";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
         public static void CheckIfaTeamHaveMorePointsThanOtherTeam()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
