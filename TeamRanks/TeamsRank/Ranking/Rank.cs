@@ -4,6 +4,8 @@ namespace Ranking
 {
     public class Rank
     {
+        private readonly int winnerPoints = 3;
+
         SoccerTeam[] teams;
 
         public Rank(SoccerTeam[] teams)
@@ -35,6 +37,23 @@ namespace Ranking
             teams[teams.Length - 1] = new SoccerTeam(name, points);
             SortTeams(teams);
             return ShowRank(teams);
+        }
+
+        public void AddNewMatch(SoccerTeam teamOne, SoccerTeam teamTwo, int teamOneGoals, int teamTwoGoals)
+        {
+            if (teamOneGoals > teamTwoGoals)
+            {
+                teamOne.AddPoints(winnerPoints);
+            }
+            else if (teamTwoGoals > teamOneGoals)
+            {
+                teamOne.AddPoints(winnerPoints);
+            }
+            else
+            {
+                teamOne.AddPoints(1);
+                teamTwo.AddPoints(1);
+            }
         }
 
         public string[] ShowRank(SoccerTeam[] teams)
