@@ -15,6 +15,11 @@ namespace Ranking
 
         public string GetTeamByPosition(int teamRank)
         {
+            if (teamRank < 1 || teamRank > teams.Length)
+            {
+                return "Invalid team rank!";
+            }
+
             SortTeams(teams);
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }

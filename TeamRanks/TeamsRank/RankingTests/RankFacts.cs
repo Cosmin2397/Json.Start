@@ -7,6 +7,34 @@ namespace RankingTests
     public class RankFacts
     {
         [Fact]
+        public static void GetTeamByPosition_WithATwoTeamsRank_WithInvalidPositiveRank()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByPosition(3);
+            string expected = "Invalid team rank!";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void GetTeamByPosition_WithATwoTeamsRank_WithInvalidNegativeRank()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByPosition(-1);
+            string expected = "Invalid team rank!";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
         public static void GetTeamByPosition_WithATwoTeamsRank_Unmodified()
         {
             SoccerTeam[] teamsRank = new SoccerTeam[2]
@@ -156,7 +184,7 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void AddTHreeNewTeams_AfterAMatch()
+        public static void AddThreeNewTeams_AfterAMatch()
         {
             SoccerTeam[] teamsRank = new SoccerTeam[2]
         {
