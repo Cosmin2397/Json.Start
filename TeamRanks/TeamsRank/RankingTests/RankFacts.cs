@@ -38,5 +38,19 @@ namespace RankingTests
             };
             Assert.Equal(actual, expected);
         }
+
+        [Fact]
+        public static void GetTeamByName()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByName("Steaua");
+            string expected = "1. Steaua 25";
+            Assert.Equal(actual, expected);
+        }
     }
 }
