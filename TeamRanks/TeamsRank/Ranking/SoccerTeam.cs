@@ -36,5 +36,10 @@ namespace Ranking
         {
             return teamName == name;
         }
+
+        public void AddPoints(int pointsToAdd)
+        {
+            this.teamPoints += pointsToAdd;
+        }
     }
 }
