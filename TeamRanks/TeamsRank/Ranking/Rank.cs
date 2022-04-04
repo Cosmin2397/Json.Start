@@ -10,5 +10,10 @@ namespace Ranking
         {
             this.teams = teams;
         }
+
+        public string GetTeamByPosition(int teamRank)
+        {
+            return teams[teamRank - 1].ShowTeam(teamRank - 1);
+        }
     }
 }
