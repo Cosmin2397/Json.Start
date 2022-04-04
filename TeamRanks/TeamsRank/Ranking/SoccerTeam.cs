@@ -21,5 +21,15 @@ namespace Ranking
         {
             return (rank + 1).ToString() + ". " + name + " " + teamPoints;
         }
+
+        public bool HaveFewerPoints(SoccerTeam team2)
+        {
+            if (team2 == null)
+            {
+                return false;
+            }
+
+            return teamPoints < team2.teamPoints;
+        }
     }
 }
