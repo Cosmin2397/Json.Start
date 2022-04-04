@@ -35,5 +35,15 @@ namespace RankingTests
             bool actual = team.IsTeamName("Steaua");
             Assert.True(actual);
         }
+
+        [Fact]
+        public static void AddOnePointToATeam()
+        {
+            SoccerTeam team = new SoccerTeam("Steaua", 25);
+            team.AddPoints(1);
+            string actual = team.ShowTeam(0);
+            string expected = "1. Steaua 26";
+            Assert.Equal(expected, actual);
+        }
     }
 }
