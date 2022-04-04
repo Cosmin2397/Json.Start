@@ -31,5 +31,10 @@ namespace Ranking
 
             return teamPoints < team2.teamPoints;
         }
+
+        public bool IsTeamName(string teamName)
+        {
+            return teamName == name;
+        }
     }
 }
