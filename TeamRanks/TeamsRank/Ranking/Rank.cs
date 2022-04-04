@@ -16,6 +16,14 @@ namespace Ranking
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }
 
+        public string[] AddNewTeam(string name, int points)
+        {
+            Array.Resize(ref teams, teams.Length + 1);
+            teams[teams.Length - 1] = new SoccerTeam(name, points);
+            SortTeams(teams);
+            return ShowRank(teams);
+        }
+
         public string[] ShowRank(SoccerTeam[] teams)
         {
             string[] ranks = new string[teams.Length];
