@@ -54,7 +54,7 @@ namespace Ranking
             }
             else if (teamTwoGoals > teamOneGoals)
             {
-                teamOne.AddPoints(winnerPoints);
+                teamTwo.AddPoints(winnerPoints);
             }
             else
             {

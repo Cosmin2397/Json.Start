@@ -114,7 +114,7 @@ namespace RankingTests
             new SoccerTeam("Rapid", 5)
         };
             Rank rank = new Rank(teamsRank);
-            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 2);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 1);
             string actual = rank.GetTeamByPosition(1);
             string expected = "1. Steaua 29";
             Assert.Equal(actual, expected);
@@ -221,6 +221,78 @@ namespace RankingTests
             Assert.Equal(actual, expected);
         }
 
+        [Fact]
+        public static void GetTeamByName_WithLowerCase()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByName("steaua");
+            string expected = "Invalid team";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void GetTeamByName_WithNullInput()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByName(null);
+            string expected = "Invalid team";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void GetTeamByName_WithEmptyInput()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 20)
+        };
+            Rank rank = new Rank(teamsRank);
+            string actual = rank.GetTeamByName(string.Empty);
+            string expected = "Invalid team";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void GetTeamByName_AfterAMatch()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 23)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 3);
+            string actual = rank.GetTeamByName("Dinamo");
+            string expected = "1. Dinamo 26";
+            Assert.Equal(actual, expected);
+        }
+
+        [Fact]
+        public static void GetTeamByName_AfterAddANewTeamAndAMatch()
+        {
+            SoccerTeam[] teamsRank = new SoccerTeam[2]
+        {
+            new SoccerTeam("Steaua", 25),
+            new SoccerTeam("Dinamo", 23)
+        };
+            Rank rank = new Rank(teamsRank);
+            rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 3);
+            rank.AddNewTeam("Botosani", 20);
+            string actual = rank.GetTeamByName("Botosani");
+            string expected = "3. Botosani 20";
+            Assert.Equal(actual, expected);
+        }
         [Fact]
         public static void AddNewMatch()
         {
