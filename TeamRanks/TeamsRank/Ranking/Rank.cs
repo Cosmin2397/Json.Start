@@ -15,11 +15,13 @@ namespace Ranking
 
         public string GetTeamByPosition(int teamRank)
         {
+            SortTeams(teams);
             return teams[teamRank - 1].ShowTeam(teamRank - 1);
         }
 
         public string GetTeamByName(string name)
         {
+            SortTeams(teams);
             for (int i = 0; i < teams.Length; i++)
             {
                 if (teams[i].IsTeamName(name))
@@ -60,6 +62,7 @@ namespace Ranking
 
         public string[] ShowRank(SoccerTeam[] teams)
         {
+            SortTeams(teams);
             string[] ranks = new string[teams.Length];
             for (int i = 0; i < teams.Length; i++)
             {
