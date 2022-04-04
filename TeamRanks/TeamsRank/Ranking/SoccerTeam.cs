@@ -16,5 +16,10 @@ namespace Ranking
             this.name = name;
             this.teamPoints = teamPoints;
         }
+
+        public string ShowTeam(int rank)
+        {
+            return (rank + 1).ToString() + ". " + name + " " + teamPoints;
+        }
     }
 }
