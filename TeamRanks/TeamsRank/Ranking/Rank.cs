@@ -4,8 +4,6 @@ namespace Ranking
 {
     public class Rank
     {
-        private readonly int winnerPoints = 3;
-
         SoccerTeam[] teams;
 
         public Rank(SoccerTeam[] teams)
@@ -13,80 +11,62 @@ namespace Ranking
             this.teams = teams;
         }
 
-        public string GetTeamByPosition(int teamRank)
+        public SoccerTeam GetTeam(int teamRank)
         {
-            if (teamRank < 1 || teamRank > teams.Length)
-            {
-                return "Invalid team rank!";
-            }
-
-            SortTeams(teams);
-            return teams[teamRank - 1].ShowTeam(teamRank - 1);
+            SortTeams();
+            return teams[teamRank - 1];
         }
 
-        public string GetTeamByName(string name)
+        public int GetRank(SoccerTeam team)
         {
-            SortTeams(teams);
+            SortTeams();
             for (int i = 0; i < teams.Length; i++)
             {
-                if (teams[i].IsTeamName(name))
+                if (teams[i] == team)
                 {
-                    return teams[i].ShowTeam(i);
+                    return i + 1;
                 }
             }
 
-            return "Invalid team";
+            return -1;
         }
 
-        public string[] AddNewTeam(string name, int points)
+        public void Add(SoccerTeam team)
         {
             Array.Resize(ref teams, teams.Length + 1);
-            teams[teams.Length - 1] = new SoccerTeam(name, points);
-            SortTeams(teams);
-            return ShowRank(teams);
+            teams[teams.Length - 1] = team;
+            SortTeams();
         }
 
-        public void AddNewMatch(SoccerTeam teamOne, SoccerTeam teamTwo, int teamOneGoals, int teamTwoGoals)
+        public void AddNewMatch(SoccerTeam homeTeam, SoccerTeam awayTeam, int homeTeamGoals, int awayTeamGoals)
         {
-            if (teamOneGoals >= 0 && teamTwoGoals >= 0)
+            if (homeTeamGoals >= 0 && awayTeamGoals >= 0)
             {
-                if (teamOneGoals > teamTwoGoals)
+                if (homeTeamGoals > awayTeamGoals)
                 {
-                    teamOne.AddPoints(winnerPoints);
+                    homeTeam.AddWin();
                 }
-                else if (teamTwoGoals > teamOneGoals)
+                else if (awayTeamGoals > homeTeamGoals)
                 {
-                    teamTwo.AddPoints(winnerPoints);
+                    awayTeam.AddWin();
                 }
                 else
                 {
-                    teamOne.AddPoints(1);
-                    teamTwo.AddPoints(1);
+                    homeTeam.AddDraw();
+                    awayTeam.AddDraw();
                 }
             }
 
-            SortTeams(teams);
+            SortTeams();
         }
 
-        public string[] ShowRank(SoccerTeam[] teams)
-        {
-            SortTeams(teams);
-            string[] ranks = new string[teams.Length];
-            for (int i = 0; i < teams.Length; i++)
-            {
-                ranks[i] = teams[i].ShowTeam(i);
-            }
-
-            return ranks;
-        }
-
-        private void SortTeams(SoccerTeam[] teams)
+        private void SortTeams()
         {
             for (int j = 0; j < teams.Length - 1; j++)
             {
                 for (int i = 0; i < teams.Length - 1; i++)
                 {
-                    if (teams[i].HaveFewerPoints(teams[i + 1]))
+                    if (teams[i].HasFewerPoints(teams[i + 1]))
                     {
                         SoccerTeam temp = teams[i + 1];
                         teams[i + 1] = teams[i];

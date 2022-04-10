@@ -8,6 +8,7 @@ namespace Ranking
 {
     public class SoccerTeam
     {
+        readonly int winnerPoints = 3;
         readonly string name;
         private int teamPoints;
 
@@ -17,39 +18,24 @@ namespace Ranking
             this.teamPoints = teamPoints;
         }
 
-        public string ShowTeam(int rank)
+        public bool HasFewerPoints(SoccerTeam nextTeam)
         {
-            return (rank + 1).ToString() + ". " + name + " " + teamPoints;
-        }
-
-        public bool HaveFewerPoints(SoccerTeam team2)
-        {
-            if (team2 == null)
+            if (nextTeam == null)
             {
                 return false;
             }
 
-            return teamPoints < team2.teamPoints;
+            return teamPoints < nextTeam.teamPoints;
         }
 
-        public bool IsTeamName(string teamName)
+        public void AddWin()
+            {
+            this.teamPoints += winnerPoints;
+        }
+
+        public void AddDraw()
         {
-            if (string.IsNullOrEmpty(teamName))
-            {
-                return false;
-            }
-
-            return teamName == name;
-        }
-
-        public void AddPoints(int pointsToAdd)
-            {
-            if (pointsToAdd <= 0)
-            {
-                return;
-            }
-
-            this.teamPoints += pointsToAdd;
+            this.teamPoints++;
         }
     }
 }

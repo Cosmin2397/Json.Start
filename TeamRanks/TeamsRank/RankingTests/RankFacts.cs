@@ -14,8 +14,8 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
-            string actual = rank.GetTeamByPosition(3);
+            Rank rank = new Rank();
+            string actual = rank.GetTeam(3);
             string expected = "Invalid team rank!";
             Assert.Equal(actual, expected);
         }
@@ -28,8 +28,8 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
-            string actual = rank.GetTeamByPosition(-1);
+            Rank rank = new Rank();
+            string actual = rank.GetTeam(-1);
             string expected = "Invalid team rank!";
             Assert.Equal(actual, expected);
         }
@@ -42,8 +42,8 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
-            string actual = rank.GetTeamByPosition(1);
+            Rank rank = new Rank();
+            string actual = rank.GetTeam(1);
             string expected = "1. Steaua 25";
             Assert.Equal(actual, expected);
         }
@@ -58,8 +58,8 @@ namespace RankingTests
             new SoccerTeam("Uta", 20),
             new SoccerTeam("Chiajna", 10)
         };
-            Rank rank = new Rank(teamsRank);
-            string actual = rank.GetTeamByPosition(3);
+            Rank rank = new Rank();
+            string actual = rank.GetTeam(3);
             string expected = "3. Uta 20";
             Assert.Equal(actual, expected);
         }
@@ -76,8 +76,8 @@ namespace RankingTests
             new SoccerTeam("Chiajna", 10),
             new SoccerTeam("Rapid", 5)
         };
-            Rank rank = new Rank(teamsRank);
-            string actual = rank.GetTeamByPosition(1);
+            Rank rank = new Rank();
+            string actual = rank.GetTeam(1);
             string expected = "1. Botosani 28";
             Assert.Equal(actual, expected);
         }
@@ -94,9 +94,9 @@ namespace RankingTests
             new SoccerTeam("Chiajna", 10),
             new SoccerTeam("Rapid", 5)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewTeam("Vaslui", 26);
-            string actual = rank.GetTeamByPosition(2);
+            string actual = rank.GetTeam(2);
             string expected = "2. Vaslui 26";
             Assert.Equal(actual, expected);
         }
@@ -113,9 +113,9 @@ namespace RankingTests
             new SoccerTeam("Chiajna", 10),
             new SoccerTeam("Rapid", 5)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 1);
-            string actual = rank.GetTeamByPosition(1);
+            string actual = rank.GetTeam(1);
             string expected = "1. Steaua 29";
             Assert.Equal(actual, expected);
         }
@@ -128,7 +128,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new(teamsRank);
+            Rank rank = new();
             string[] actual = rank.AddNewTeam("Rapid", 26);
             string[] expected =
             {
@@ -147,7 +147,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new(teamsRank);
+            Rank rank = new();
             rank.AddNewTeam("Rapid", 26);
             string[] actual = rank.AddNewTeam("Uta", 10);
             string[] expected =
@@ -168,7 +168,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new(teamsRank);
+            Rank rank = new();
             rank.AddNewTeam("Rapid", 26);
             rank.AddNewTeam("Botosani", 20);
             string[] actual = rank.AddNewTeam("Uta", 10);
@@ -191,7 +191,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new(teamsRank);
+            Rank rank = new();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 0);
             rank.AddNewTeam("Rapid", 26);
             rank.AddNewTeam("Botosani", 20);
@@ -215,7 +215,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             string actual = rank.GetTeamByName("Steaua");
             string expected = "1. Steaua 25";
             Assert.Equal(actual, expected);
@@ -229,7 +229,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             string actual = rank.GetTeamByName("steaua");
             string expected = "Invalid team";
             Assert.Equal(actual, expected);
@@ -243,7 +243,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             string actual = rank.GetTeamByName(null);
             string expected = "Invalid team";
             Assert.Equal(actual, expected);
@@ -257,7 +257,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             string actual = rank.GetTeamByName(string.Empty);
             string expected = "Invalid team";
             Assert.Equal(actual, expected);
@@ -271,7 +271,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 23)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 3);
             string actual = rank.GetTeamByName("Dinamo");
             string expected = "1. Dinamo 26";
@@ -286,7 +286,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 23)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 3);
             rank.AddNewTeam("Botosani", 20);
             string actual = rank.GetTeamByName("Botosani");
@@ -301,7 +301,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 0);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =
@@ -321,7 +321,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 2);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =
@@ -341,7 +341,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 2);
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 2, 0);
             string[] actual = rank.ShowRank(teamsRank);
@@ -362,7 +362,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, 0);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =
@@ -382,7 +382,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], -1, 0);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =
@@ -402,7 +402,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], 0, -3);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =
@@ -422,7 +422,7 @@ namespace RankingTests
             new SoccerTeam("Steaua", 25),
             new SoccerTeam("Dinamo", 20)
         };
-            Rank rank = new Rank(teamsRank);
+            Rank rank = new Rank();
             rank.AddNewMatch(teamsRank[0], teamsRank[1], -1, -3);
             string[] actual = rank.ShowRank(teamsRank);
             string[] expected =

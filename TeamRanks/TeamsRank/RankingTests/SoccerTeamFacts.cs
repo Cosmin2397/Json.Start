@@ -71,7 +71,7 @@ namespace RankingTests
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
             SoccerTeam team2 = new SoccerTeam("Dinamo", 20);
-            bool actual = team.HaveFewerPoints(team2);
+            bool actual = team.HasFewerPoints(team2);
             Assert.False(actual);
         }
 
@@ -80,7 +80,7 @@ namespace RankingTests
         {
             SoccerTeam team = new SoccerTeam("Steaua", 20);
             SoccerTeam team2 = new SoccerTeam("Dinamo", 25);
-            bool actual = team.HaveFewerPoints(team2);
+            bool actual = team.HasFewerPoints(team2);
             Assert.True(actual);
         }
 
@@ -89,7 +89,7 @@ namespace RankingTests
         {
             SoccerTeam team = new SoccerTeam("Steaua", 20);
             SoccerTeam team2 = new SoccerTeam("Dinamo", 20);
-            bool actual = team.HaveFewerPoints(team2);
+            bool actual = team.HasFewerPoints(team2);
             Assert.False(actual);
         }
 
@@ -129,7 +129,7 @@ namespace RankingTests
         public static void AddOnePointToATeam()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
-            team.AddPoints(1);
+            team.AddDraw();
             string actual = team.ShowTeam(0);
             string expected = "1. Steaua 26";
             Assert.Equal(expected, actual);
@@ -139,7 +139,7 @@ namespace RankingTests
         public static void AddThreePointsToATeam()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
-            team.AddPoints(3);
+            team.AddWin();
             string actual = team.ShowTeam(0);
             string expected = "1. Steaua 28";
             Assert.Equal(expected, actual);
@@ -149,29 +149,9 @@ namespace RankingTests
         public static void AddTenPointsToATeam()
         {
             SoccerTeam team = new SoccerTeam("Steaua", 25);
-            team.AddPoints(10);
+            team.AddWin();
             string actual = team.ShowTeam(0);
-            string expected = "1. Steaua 35";
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public static void DecreaseThreePointsToATeam()
-        {
-            SoccerTeam team = new SoccerTeam("Steaua", 25);
-            team.AddPoints(-3);
-            string actual = team.ShowTeam(0);
-            string expected = "1. Steaua 25";
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public static void AddZeroToTeamPoints()
-        {
-            SoccerTeam team = new SoccerTeam("Steaua", 25);
-            team.AddPoints(0);
-            string actual = team.ShowTeam(0);
-            string expected = "1. Steaua 25";
+            string expected = "1. Steaua 28";
             Assert.Equal(expected, actual);
         }
     }
