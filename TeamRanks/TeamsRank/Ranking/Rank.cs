@@ -9,13 +9,13 @@ namespace Ranking
 
         public SoccerTeam GetTeam(int teamRank)
         {
-            SortTeams();
+            QuickSort(0, Teams.Length - 1);
             return Teams[teamRank - 1];
         }
 
         public int GetRank(SoccerTeam team)
         {
-            SortTeams();
+            QuickSort(0, Teams.Length - 1);
             for (int i = 0; i < Teams.Length; i++)
             {
                 if (Teams[i].Equals(team))
@@ -31,7 +31,7 @@ namespace Ranking
         {
             Array.Resize(ref Teams, Teams.Length + 1);
             Teams[Teams.Length - 1] = team;
-            SortTeams();
+            QuickSort(0, Teams.Length - 1);
         }
 
         public void AddNewMatch(SoccerTeam homeTeam, SoccerTeam awayTeam, int homeTeamGoals, int awayTeamGoals)
@@ -50,23 +50,42 @@ namespace Ranking
                     awayTeam.AddDraw();
                 }
 
-                SortTeams();
+                QuickSort(0, Teams.Length - 1);
         }
 
-        private void SortTeams()
+        private int Partition(int low, int high)
         {
-            for (int j = 0; j < Teams.Length - 1; j++)
+            int lowIndex = low - 1;
+            for (int j = low; j < high; j++)
             {
-                for (int i = 0; i < Teams.Length - 1; i++)
+                if (Teams[high].HasFewerOrEqualPoints(Teams[j]))
                 {
-                    if (Teams[i].HasFewerPoints(Teams[i + 1]))
-                    {
-                        SoccerTeam temp = Teams[i + 1];
-                        Teams[i + 1] = Teams[i];
-                        Teams[i] = temp;
-                    }
+                    lowIndex++;
+
+                    SoccerTeam temp = Teams[lowIndex];
+                    Teams[lowIndex] = Teams[j];
+                    Teams[j] = temp;
                 }
             }
+
+            SoccerTeam temp1 = Teams[lowIndex + 1];
+            Teams[lowIndex + 1] = Teams[high];
+            Teams[high] = temp1;
+
+            return lowIndex + 1;
+        }
+
+        private void QuickSort(int low, int high)
+        {
+            if (low >= high)
+            {
+                return;
+            }
+
+            int partitionIndex = Partition(low, high);
+
+            QuickSort(low, partitionIndex - 1);
+            QuickSort(partitionIndex + 1, high);
         }
     }
 }

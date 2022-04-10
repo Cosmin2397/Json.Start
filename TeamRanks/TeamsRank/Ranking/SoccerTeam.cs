@@ -18,14 +18,14 @@ namespace Ranking
             this.teamPoints = teamPoints;
         }
 
-        public bool HasFewerPoints(SoccerTeam nextTeam)
+        public bool HasFewerOrEqualPoints(SoccerTeam nextTeam)
         {
             if (nextTeam == null)
             {
                 return false;
             }
 
-            return teamPoints < nextTeam.teamPoints;
+            return teamPoints <= nextTeam.teamPoints;
         }
 
         public void AddWin()
