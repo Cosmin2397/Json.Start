@@ -6,9 +6,9 @@ namespace Ranking
     {
         SoccerTeam[] teams;
 
-        public Rank(SoccerTeam[] teams)
+        public Rank()
         {
-            this.teams = teams;
+            teams = new SoccerTeam[teams.Length];
         }
 
         public SoccerTeam GetTeam(int teamRank)

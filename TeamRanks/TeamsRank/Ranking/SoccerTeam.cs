@@ -9,7 +9,7 @@ namespace Ranking
     public class SoccerTeam
     {
         readonly int winnerPoints = 3;
-        readonly string name;
+        private readonly string name;
         private int teamPoints;
 
         public SoccerTeam(string name, int teamPoints)
