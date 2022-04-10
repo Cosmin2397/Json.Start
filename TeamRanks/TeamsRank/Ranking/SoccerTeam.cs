@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ranking
 {
-    public class SoccerTeam
+    public class SoccerTeam : IEquatable<SoccerTeam>
     {
         readonly int winnerPoints = 3;
         private readonly string name;
@@ -36,6 +36,21 @@ namespace Ranking
         public void AddDraw()
         {
             this.teamPoints++;
+        }
+
+        public bool Equals(SoccerTeam other)
+        {
+            return other != null && name == other.name && teamPoints == other.teamPoints;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as SoccerTeam);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(name, teamPoints);
         }
     }
 }

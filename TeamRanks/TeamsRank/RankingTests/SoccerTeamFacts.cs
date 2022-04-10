@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Ranking;
+using Newtonsoft.Json;
 
 namespace RankingTests
 {
@@ -43,9 +44,10 @@ namespace RankingTests
         {
             SoccerTeam team = new("Steaua", 20);
             team.AddDraw();
-            string expected = "Steaua 21";
-
-            Assert.Equal(team.ToString(), expected);
+            SoccerTeam expectedTeam = new("Steaua", 21);
+            var actual = JsonConvert.SerializeObject(team);
+            var expected = JsonConvert.SerializeObject(expectedTeam);
+            Assert.Equal(actual, expected);
         }
 
         [Fact]
@@ -53,9 +55,10 @@ namespace RankingTests
         {
             SoccerTeam team = new("Steaua", 20);
             team.AddWin();
-            string expected = "Steaua 23";
-
-            Assert.Equal(team.ToString(), expected);
+            SoccerTeam expectedTeam = new("Steaua", 23);
+            var actual = JsonConvert.SerializeObject(team);
+            var expected = JsonConvert.SerializeObject(expectedTeam);
+            Assert.Equal(actual, expected);
         }
 
     }

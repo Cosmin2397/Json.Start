@@ -1,28 +1,24 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Ranking
 {
     public class Rank
     {
-        SoccerTeam[] teams;
-
-        public Rank()
-        {
-            teams = new SoccerTeam[teams.Length];
-        }
+        public SoccerTeam[] Teams;
 
         public SoccerTeam GetTeam(int teamRank)
         {
             SortTeams();
-            return teams[teamRank - 1];
+            return Teams[teamRank - 1];
         }
 
         public int GetRank(SoccerTeam team)
         {
             SortTeams();
-            for (int i = 0; i < teams.Length; i++)
+            for (int i = 0; i < Teams.Length; i++)
             {
-                if (teams[i] == team)
+                if (Teams[i].Equals(team))
                 {
                     return i + 1;
                 }
@@ -33,15 +29,13 @@ namespace Ranking
 
         public void Add(SoccerTeam team)
         {
-            Array.Resize(ref teams, teams.Length + 1);
-            teams[teams.Length - 1] = team;
+            Array.Resize(ref Teams, Teams.Length + 1);
+            Teams[Teams.Length - 1] = team;
             SortTeams();
         }
 
         public void AddNewMatch(SoccerTeam homeTeam, SoccerTeam awayTeam, int homeTeamGoals, int awayTeamGoals)
         {
-            if (homeTeamGoals >= 0 && awayTeamGoals >= 0)
-            {
                 if (homeTeamGoals > awayTeamGoals)
                 {
                     homeTeam.AddWin();
@@ -55,22 +49,21 @@ namespace Ranking
                     homeTeam.AddDraw();
                     awayTeam.AddDraw();
                 }
-            }
 
-            SortTeams();
+                SortTeams();
         }
 
         private void SortTeams()
         {
-            for (int j = 0; j < teams.Length - 1; j++)
+            for (int j = 0; j < Teams.Length - 1; j++)
             {
-                for (int i = 0; i < teams.Length - 1; i++)
+                for (int i = 0; i < Teams.Length - 1; i++)
                 {
-                    if (teams[i].HasFewerPoints(teams[i + 1]))
+                    if (Teams[i].HasFewerPoints(Teams[i + 1]))
                     {
-                        SoccerTeam temp = teams[i + 1];
-                        teams[i + 1] = teams[i];
-                        teams[i] = temp;
+                        SoccerTeam temp = Teams[i + 1];
+                        Teams[i + 1] = Teams[i];
+                        Teams[i] = temp;
                     }
                 }
             }
