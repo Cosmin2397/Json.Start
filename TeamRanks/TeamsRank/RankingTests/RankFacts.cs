@@ -35,7 +35,7 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void GetTeamByPosition_WithSixTeamsRank_InAnUnsortedList()
+        public static void GetTeamByPosition_WithFourTeamsInRank_InAnUnsortedWay()
         { 
         Rank rank = new();
             SoccerTeam firstTeam = new("Steaua", 25);
@@ -51,7 +51,7 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void GetTeamByPosition_WithSixTeamsRank_AfterAddANewTeam()
+        public static void GetTeamByPosition_WithFourTeamsRank_AfterAddANewTeam()
         {
             Rank rank = new();
             SoccerTeam firstTeam = new("Steaua", 25);
@@ -69,7 +69,7 @@ namespace RankingTests
         }
 
         [Fact]
-        public static void GetTeamByPosition_WithSixTeamsRank_AfterANewMatch()
+        public static void GetTeamByPosition_WithFourTeamsRank_AfterANewMatch()
         {
             Rank rank = new();
             SoccerTeam firstTeam = new("Steaua", 26);
