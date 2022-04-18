@@ -57,5 +57,14 @@ namespace JsonAppTests
             Assert.False(range.Match("!cd"));
         }
 
+        [Fact]
+        public static void Check_WithAnInvalidRAnge_ShouldReturnFalse()
+        {
+            Range range = new('f', 'a');
+            Assert.False(range.Match("abcd"));
+            Assert.False(range.Match("fbc"));
+            Assert.False(range.Match("bcd"));
+        }
+
     }
 }
