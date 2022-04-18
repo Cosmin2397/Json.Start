@@ -25,5 +25,12 @@ namespace JsonAppTests
             Assert.False(range.Match(string.Empty));
         }
 
+        [Fact]
+        public static void Check_WithAValidChar_ShouldReturnTrue()
+        {
+            Range range = new('a', 'f');
+            Assert.True(range.Match("a"));
+        }
+
     }
 }
