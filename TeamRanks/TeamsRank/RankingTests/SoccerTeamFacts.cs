@@ -17,7 +17,7 @@ namespace RankingTests
         {
             SoccerTeam team = new("Steaua", 25);
             SoccerTeam team2 = new("Dinamo", 20);
-            bool actual = team.HasFewerOrEqualPoints(team2);
+            bool actual = team.HasFewerPoints(team2);
             Assert.False(actual);
         }
 
@@ -26,7 +26,7 @@ namespace RankingTests
         {
             SoccerTeam team = new("Steaua", 20);
             SoccerTeam team2 = new("Dinamo", 25);
-            bool actual = team.HasFewerOrEqualPoints(team2);
+            bool actual = team.HasFewerPoints(team2);
             Assert.True(actual);
         }
 
@@ -35,8 +35,8 @@ namespace RankingTests
         {
             SoccerTeam team = new("Steaua", 20);
             SoccerTeam team2 = new("Dinamo", 20);
-            bool actual = team.HasFewerOrEqualPoints(team2);
-            Assert.True(actual);
+            bool actual = team.HasFewerPoints(team2);
+            Assert.False(actual);
         }
 
         [Fact]

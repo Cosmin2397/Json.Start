@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Ranking
 {
@@ -11,7 +10,7 @@ namespace Ranking
         {
             Array.Resize(ref teams, teams.Length + 1);
             teams[teams.Length - 1] = team;
-            QuickSort(0, teams.Length - 1);
+            Sort();
         }
 
         public SoccerTeam GetTeam(int teamRank)
@@ -23,7 +22,7 @@ namespace Ranking
         {
             for (int i = 0; i < teams.Length; i++)
             {
-                if (teams[i].Equals(team))
+                if (teams[i] == team)
                 {
                     return i + 1;
                 }
@@ -48,42 +47,23 @@ namespace Ranking
                     awayTeam.AddDraw();
                 }
 
-                QuickSort(0, teams.Length - 1);
+                Sort();
         }
 
-        private int Partition(int low, int high)
+        private void Sort()
         {
-            int lowIndex = low - 1;
-            for (int j = low; j < high; j++)
+            for (int i = 1; i < teams.Length; ++i)
             {
-                if (teams[high].HasFewerOrEqualPoints(teams[j]))
+                SoccerTeam temp = teams[i];
+                int j = i - 1;
+                while (j >= 0 && teams[j].HasFewerPoints(temp))
                 {
-                    lowIndex++;
-
-                    SoccerTeam temp = teams[lowIndex];
-                    teams[lowIndex] = teams[j];
-                    teams[j] = temp;
+                    teams[j + 1] = teams[j];
+                    j--;
                 }
+
+                teams[j + 1] = temp;
             }
-
-            SoccerTeam temp1 = teams[lowIndex + 1];
-            teams[lowIndex + 1] = teams[high];
-            teams[high] = temp1;
-
-            return lowIndex + 1;
-        }
-
-        private void QuickSort(int low, int high)
-        {
-            if (low >= high)
-            {
-                return;
-            }
-
-            int partitionIndex = Partition(low, high);
-
-            QuickSort(low, partitionIndex - 1);
-            QuickSort(partitionIndex + 1, high);
         }
     }
 }
