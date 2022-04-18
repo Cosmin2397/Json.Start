@@ -18,5 +18,12 @@ namespace JsonAppTests
             Assert.False(range.Match(null));
         }
 
-     }
+        [Fact]
+        public static void CheckIfWork_WithEmpty()
+        {
+            Range range = new('a', 'f');
+            Assert.False(range.Match(string.Empty));
+        }
+
+    }
 }
