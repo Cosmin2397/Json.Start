@@ -32,5 +32,12 @@ namespace JsonAppTests
             Assert.True(range.Match("a"));
         }
 
+        [Fact]
+        public static void Check_WithAInvalidChar_ShouldReturnFalse()
+        {
+            Range range = new('a', 'f');
+            Assert.False(range.Match("z"));
+        }
+
     }
 }
