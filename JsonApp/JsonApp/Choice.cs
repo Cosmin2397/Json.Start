@@ -21,9 +21,12 @@ namespace JsonApp
             {
                 return false;
             }
-            if(patterns[0].Match(text))
-            { 
-                return true; 
+            foreach (var pattern in patterns)
+            {
+                if (pattern.Match(text))
+                {
+                    return true;
+                }
             }
             return false;
         }
