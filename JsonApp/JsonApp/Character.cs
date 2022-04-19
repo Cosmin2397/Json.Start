@@ -21,7 +21,8 @@ namespace JsonApp
             {
                 return false;
             }
-            return true;
+
+            return text[0] == pattern;
         }
     }
 }
