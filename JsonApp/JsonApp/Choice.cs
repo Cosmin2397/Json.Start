@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JsonApp
 {
-    public class Choice
+    public class Choice : IPattern
     {
         private IPattern[] patterns;
 

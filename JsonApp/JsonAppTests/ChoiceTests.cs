@@ -89,8 +89,12 @@ namespace JsonAppTests
         public static void CheckIfWork_WithChoicePatterns()
         {
             var hex = new Choice(
+                 new Choice(
                          new Character('0'),
-                         new Range('1', '9')
+                         new Range('1', '9')),
+                 new Choice(
+                         new Range('a', 'f'),
+                         new Range('A', 'F'))
                      );
 
             Assert.True(hex.Match("012"));
