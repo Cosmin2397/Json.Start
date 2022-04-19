@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JsonApp
 {
-    public class Character
+    public class Character : IPattern
     {
         readonly char pattern;
 
