@@ -17,6 +17,10 @@ namespace JsonApp
 
         public bool Match(string text)
         {
+            if(string.IsNullOrEmpty(text))
+            {
+                return false;
+            }
             return true;
         }
     }
