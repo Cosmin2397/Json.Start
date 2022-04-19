@@ -84,5 +84,26 @@ namespace JsonAppTests
             Assert.False(choices.Match("w12"));
             Assert.False(choices.Match("M12"));
         }
+
+        [Fact]
+        public static void CheckIfWork_WithChoicePatterns()
+        {
+            var hex = new Choice(
+                         new Character('0'),
+                         new Range('1', '9')
+                     );
+
+            Assert.True(hex.Match("012"));
+            Assert.True(hex.Match("12"));
+            Assert.True(hex.Match("92"));
+            Assert.True(hex.Match("a9"));
+            Assert.True(hex.Match("f8"));
+            Assert.True(hex.Match("A9"));
+            Assert.True(hex.Match("F8"));
+            Assert.False(hex.Match("g8"));
+            Assert.False(hex.Match("G8"));
+            Assert.False(hex.Match(""));
+            Assert.False(hex.Match(null));
+        }
     }
 }
