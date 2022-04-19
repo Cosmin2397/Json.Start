@@ -21,7 +21,11 @@ namespace JsonApp
             {
                 return false;
             }
-            return true;
+            if(patterns[0].Match(text))
+            { 
+                return true; 
+            }
+            return false;
         }
     }
 }
