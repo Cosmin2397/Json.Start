@@ -18,5 +18,12 @@ namespace JsonAppTests
             Character character = new('a');
             Assert.False(character.Match(string.Empty));
         }
+
+        [Fact]
+        public static void Check_WithAInvalidChar_ShouldReturnFalse()
+        {
+            Character character = new('a');
+            Assert.False(character.Match("z"));
+        }
     }
 }
