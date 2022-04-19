@@ -39,5 +39,50 @@ namespace JsonAppTests
             Assert.True(choices.Match("112"));
             Assert.True(choices.Match("912"));
         }
+
+        [Fact]
+        public static void CheckIfWork_WithValidLetters()
+        {
+            Choice choices = new(
+                new Range('a', 'f'),
+                new Range('A', 'F')
+                );
+
+            Assert.True(choices.Match("a12"));
+            Assert.True(choices.Match("B12"));
+            Assert.True(choices.Match("C12"));
+            Assert.True(choices.Match("d12"));
+            Assert.True(choices.Match("E12"));
+            Assert.True(choices.Match("c12"));
+        }
+
+        [Fact]
+        public static void CheckIfWork_WithInvalidNumbers()
+        {
+            Choice choices = new(
+                new Character('0'),
+                new Range('1', '9')
+                );
+
+            Assert.False(choices.Match("a12"));
+            Assert.False(choices.Match("m12"));
+            Assert.False(choices.Match("q12"));
+        }
+
+        [Fact]
+        public static void CheckIfWork_WithInvalidLetters()
+        {
+            Choice choices = new(
+                new Range('a', 'f'),
+                new Range('A', 'F')
+                );
+
+            Assert.False(choices.Match("g12"));
+            Assert.False(choices.Match("Z12"));
+            Assert.False(choices.Match("Y12"));
+            Assert.False(choices.Match("W12"));
+            Assert.False(choices.Match("w12"));
+            Assert.False(choices.Match("M12"));
+        }
     }
 }
