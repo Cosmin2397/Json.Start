@@ -8,7 +8,7 @@ namespace JsonApp
 {
     public class Choice : IPattern
     {
-        private IPattern[] patterns;
+        readonly IPattern[] patterns;
 
         public Choice(params IPattern[] patterns)
         {
