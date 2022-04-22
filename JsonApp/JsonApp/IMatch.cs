@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JsonApp
 {
-    interface IMatch
+    public interface IMatch
     {
         bool Success();
         string RemainingText();

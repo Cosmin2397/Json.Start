@@ -19,7 +19,7 @@ namespace JsonApp
 
         public bool Match(string text)
         {
-            if(string.IsNullOrEmpty(text) || start > end)
+            if (string.IsNullOrEmpty(text) || start > end)
             {
                 return false;
             }
