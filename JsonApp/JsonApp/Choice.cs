@@ -15,16 +15,18 @@ namespace JsonApp
             this.patterns = patterns;
         }
 
-        public bool Match(string text)
+        public IMatch Match(string text)
         {
             foreach (var pattern in patterns)
             {
-                if (pattern.Match(text))
+                if (pattern.Match(text).Success())
                 {
-                    return true;
-                }
+                    return pattern.Match(text);
+                };
             }
-            return false;
+
+            return new Match(false, text);
+
         }
     }
 }
