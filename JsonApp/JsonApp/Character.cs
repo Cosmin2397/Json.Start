@@ -25,8 +25,8 @@ namespace JsonApp
             {
                 succes = false;
             }
-            IMatch match = new Match(succes, text);
-            return match;
+
+            return new Match(succes, text);
         }
     }
 }
