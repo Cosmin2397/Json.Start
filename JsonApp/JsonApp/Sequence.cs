@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace JsonApp
 {
-    public class Choice : IPattern
+    public class Sequence : IPattern
     {
         readonly IPattern[] patterns;
 
-        public Choice(params IPattern[] patterns)
+        public Sequence(params IPattern[] patterns)
         {
             this.patterns = patterns;
         }
@@ -19,14 +19,13 @@ namespace JsonApp
         {
             foreach (var pattern in patterns)
             {
-                Match match = (Match)pattern.Match(text);
-                if (match.Success())
+                if (!pattern.Match(text).Success())
                 {
-                    return match;
+                    return pattern.Match(text);
                 }
             }
 
-            return new Match(false, text);
+            return new Match(true, text);
 
         }
     }
