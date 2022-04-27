@@ -20,17 +20,12 @@ namespace JsonApp
         public IMatch Match(string text)
         {
 
-            bool succes = true;
             if (string.IsNullOrEmpty(text) || text[0] != pattern)
             {
-                succes = false;
-            }
-            if (succes == true)
-            {
-                text = text[1..];
+                return new Match(false, text);
             }
 
-            return new Match(succes, text);
+            return new Match(true, text[1..]);
         }
     }
 }
