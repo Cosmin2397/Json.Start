@@ -24,6 +24,10 @@ namespace JsonApp
             {
                 succes = false;
             }
+            if (succes == true)
+            {
+                text = text[1..];
+            }
 
             return new Match(succes, text);
         }

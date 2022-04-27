@@ -22,11 +22,6 @@ namespace JsonApp
         }
         public string RemainingText()
         {
-            if(Success())
-            {
-                return message[1..];
-            }
-
             return message;
         }
     }
