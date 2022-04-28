@@ -85,12 +85,39 @@ namespace JsonAppTests
                 new Character('b')
                );
 
-
-
             Assert.True(ab.Match("abc").Success());
             Assert.True(ab.Match("abc").RemainingText() == "c");
 
 
+        }
+
+        [Fact]
+        public static void CheckIfWork_WithSequencePatterns()
+        {
+            var hex = new Choice(
+             new Range('0', '9'),
+             new Range('a', 'f'),
+             new Range('A', 'F')
+             );
+
+            var hexSeq = new Sequence(
+                new Character('u'),
+                new Sequence(
+                    hex,
+                    hex,
+                    hex,
+                    hex
+                )
+            );
+
+            Assert.True(hexSeq.Match("u1234").Success());
+            Assert.True(hexSeq.Match("u1234").RemainingText() == "");
+            Assert.True(hexSeq.Match("uabcdef").Success());
+            Assert.True(hexSeq.Match("uabcdef").RemainingText() == "ef");
+            Assert.True(hexSeq.Match("uB005 ab").Success());
+            Assert.True(hexSeq.Match("uB005 ab").RemainingText() == " ab");
+            Assert.False(hexSeq.Match("abc").Success());
+            Assert.True(hexSeq.Match("abc").RemainingText() == "abc");
         }
     }
 }
