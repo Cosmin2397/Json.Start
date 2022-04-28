@@ -42,6 +42,26 @@ namespace JsonAppTests
                 Assert.False(accepted.Match("/4").Success());
                 Assert.True(accepted.Match("/4").RemainingText() == "/4");
             }
+
+            [Fact]
+            public static void Check_WithAValidString_ShouldReturnTrue()
+            {
+                Any accepted = new("Ee");
+                Assert.True(accepted.Match("ea").Success());
+                Assert.True(accepted.Match("ea").RemainingText() == "a");
+                Assert.True(accepted.Match("Eac").Success());
+                Assert.True(accepted.Match("Eac").RemainingText() == "ac");
+            }
+
+            [Fact]
+            public static void Check_WithAValidSignString_ShouldReturnTrue()
+            {
+                Any accepted = new("+-");
+                Assert.True(accepted.Match("+2").Success());
+                Assert.True(accepted.Match("+2").RemainingText() == "2");
+                Assert.True(accepted.Match("-3").Success());
+                Assert.True(accepted.Match("-3").RemainingText() == "3");
+            }
         }
     }
 }
