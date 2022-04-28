@@ -19,7 +19,10 @@ namespace JsonApp
         {
             foreach (var pattern in patterns)
             {
-                return pattern.Match(text);
+                if (!pattern.Match(text).Success())
+                {
+                    return new Match(false, text);
+                }
             }
 
             return new Match(true, text);
