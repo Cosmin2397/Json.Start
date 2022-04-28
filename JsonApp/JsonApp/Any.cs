@@ -17,6 +17,14 @@ namespace JsonApp
 
         public IMatch Match(string text)
         {
+            foreach (char c in _accepted)
+            {
+                if (!string.IsNullOrEmpty(text) && text[0] == c)
+                {
+                    return new Match(true, text[1..]);
+                }
+            }
+
             return new Match(false, text);
         }
     }
