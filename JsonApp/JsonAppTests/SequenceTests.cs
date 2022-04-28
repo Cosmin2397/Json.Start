@@ -59,5 +59,38 @@ namespace JsonAppTests
             Assert.False(ab.Match(null).Success());
             Assert.True(ab.Match(null).RemainingText() == null);
         }
+
+        [Fact]
+        public static void CheckIfWork_WithValidNumbers()
+        {
+            Sequence sequence = new(
+                new Character('0'),
+                new Range('1', '9'),
+                new Character('0')
+                );
+
+            Assert.True(sequence.Match("010").Success());
+            Assert.True(sequence.Match("010").RemainingText() == "");
+            Assert.True(sequence.Match("0301").Success());
+            Assert.True(sequence.Match("0301").RemainingText() == "1");
+            Assert.True(sequence.Match("0902").Success());
+            Assert.True(sequence.Match("0902").RemainingText() == "2");
+        }
+
+        [Fact]
+        public static void CheckIfWork_WithValidLetters()
+        {
+            var ab = new Sequence(
+                new Character('a'),
+                new Character('b')
+               );
+
+
+
+            Assert.True(ab.Match("abc").Success());
+            Assert.True(ab.Match("abc").RemainingText() == "c");
+
+
+        }
     }
 }
