@@ -17,11 +17,14 @@ namespace JsonApp
 
         public IMatch Match(string text)
         {
+            string initialText = text;
             foreach (var pattern in patterns)
             {
-                if (!pattern.Match(text).Success())
+                var match = pattern.Match(text);
+                text = match.RemainingText();
+                if (!match.Success())
                 {
-                    return new Match(false, text);
+                    return new Match(false, initialText);
                 }
             }
 
