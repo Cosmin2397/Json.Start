@@ -8,22 +8,20 @@ namespace JsonApp
 {
     public class Any: IPattern
     {
-        private readonly string _accepted;
+        private readonly string accepted;
 
         public Any(string accepted)
         {
-            _accepted = accepted;
+            this.accepted = accepted;
         }
 
         public IMatch Match(string text)
         {
-            foreach (char c in _accepted)
+            if (!string.IsNullOrEmpty(text) && accepted.Contains(text[0]))
             {
-                if (!string.IsNullOrEmpty(text) && text[0] == c)
-                {
-                    return new Match(true, text[1..]);
-                }
+                return new Match(true, text[1..]);
             }
+
 
             return new Match(false, text);
         }
