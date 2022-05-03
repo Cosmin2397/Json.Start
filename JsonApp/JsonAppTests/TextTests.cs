@@ -36,5 +36,23 @@ namespace JsonAppTests
             Assert.False(unsupportedFalse.Match("nfalse").Success());
             Assert.True(unsupportedFalse.Match("nfalse").RemainingText() == "nfalse");
         }
+
+        [Fact]
+        public static void Check_WithAValidString_ShouldReturnTrue()
+        {
+            Text acceptedTrue = new("true");
+            Text acceptedFalse = new("false");
+            Text empty = new("");
+            Assert.True(acceptedTrue.Match("truex").Success());
+            Assert.True(acceptedTrue.Match("truex").RemainingText() == "x");
+            Assert.True(acceptedTrue.Match("true").Success());
+            Assert.True(acceptedTrue.Match("true").RemainingText() == "");
+            Assert.True(acceptedFalse.Match("falsex").Success());
+            Assert.True(acceptedFalse.Match("falsex").RemainingText() == "x");
+            Assert.True(acceptedFalse.Match("false").Success());
+            Assert.True(acceptedFalse.Match("false").RemainingText() == "");
+            Assert.True(empty.Match("true").Success());
+            Assert.True(empty.Match("true").RemainingText() == "true");
+        }
     }
 }
