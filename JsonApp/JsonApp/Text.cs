@@ -18,7 +18,7 @@ namespace JsonApp
         {
             if (!string.IsNullOrEmpty(text) && text.StartsWith(prefix))
             {
-                return new Match(true, text);
+                return new Match(true, text[prefix.Length..]);
             }
 
             return new Match(false, text);
