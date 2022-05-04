@@ -53,5 +53,16 @@ namespace JsonAppTests
             Assert.True(many.Match(inputData).Success());
             Assert.Equal(many.Match(inputData).RemainingText(), expectedString);
         }
+
+        [Theory]
+        [InlineData("truex", "x")]
+        [InlineData("truetruex", "x")]
+        [InlineData("cc", "cc")]
+        public static void CheckIfWork_WithValidText(string inputData, string expectedString)
+        {
+            Many many = new(new Text("true"));
+            Assert.True(many.Match(inputData).Success());
+            Assert.Equal(many.Match(inputData).RemainingText(), expectedString);
+        }
     }
 }
