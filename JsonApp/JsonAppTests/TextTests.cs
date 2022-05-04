@@ -11,7 +11,7 @@ namespace JsonAppTests
         {
             Text accepted = new("true");
             Assert.False(accepted.Match(inputData).Success());
-            Assert.True(accepted.Match(inputData).RemainingText() == expectedString);
+            Assert.Equal(accepted.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace JsonAppTests
         {
             Text accepted = new("true");
             Assert.False(accepted.Match(inputData).Success());
-            Assert.True(accepted.Match(inputData).RemainingText() == expectedString);
+            Assert.Equal(accepted.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -29,10 +29,8 @@ namespace JsonAppTests
         public static void Check_WithAInvalidString_ShouldReturnFalse(string inputData, string expectedString)
         {
             Text unsupportedTrue = new("true");
-            bool uTrue = unsupportedTrue.Match(inputData).Success();
-            bool uTrueText = unsupportedTrue.Match(inputData).RemainingText() == expectedString;
-            Assert.False(uTrue);
-            Assert.True(uTrueText);
+            Assert.False(unsupportedTrue.Match(inputData).Success());
+            Assert.Equal(unsupportedTrue.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -41,10 +39,8 @@ namespace JsonAppTests
         public static void Check_WithAInvalidStringFalse_ShouldReturnFalse(string inputData, string expectedString)
         {
             Text unsupportedFalse = new("false");
-            bool uFalse = unsupportedFalse.Match(inputData).Success();
-            bool uFalseText = unsupportedFalse.Match(inputData).RemainingText() == expectedString;
-            Assert.False(uFalse);
-            Assert.True(uFalseText);
+            Assert.False(unsupportedFalse.Match(inputData).Success());
+            Assert.Equal(unsupportedFalse.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -55,7 +51,7 @@ namespace JsonAppTests
             Text acceptedTrue = new("true");
 
             Assert.True(acceptedTrue.Match(inputData).Success());
-            Assert.True(acceptedTrue.Match(inputData).RemainingText() == expectedString);
+            Assert.Equal(acceptedTrue.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -66,7 +62,7 @@ namespace JsonAppTests
             Text acceptedFalse = new("false");
 
             Assert.True(acceptedFalse.Match(inputData).Success());
-            Assert.True(acceptedFalse.Match(inputData).RemainingText() == expectedString);
+            Assert.Equal(acceptedFalse.Match(inputData).RemainingText(), expectedString);
         }
 
         [Theory]
@@ -77,7 +73,7 @@ namespace JsonAppTests
             Text empty = new("");
 
             Assert.True(empty.Match(inputData).Success());
-            Assert.True(empty.Match(inputData).RemainingText() == expectedString);
+            Assert.Equal(empty.Match(inputData).RemainingText(), expectedString);
         }
     }
 }
