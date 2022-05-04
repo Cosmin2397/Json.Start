@@ -17,7 +17,17 @@ namespace JsonApp
 
         public IMatch Match(string text)
         {
-            return new Match(true, text);
+            IMatch match = new Match(true, text);
+            if (string.IsNullOrEmpty(text))
+            {
+                return match;
+            }
+            while (match.Success())
+            {
+                match = pattern.Match(match.RemainingText());
+            }
+
+            return new Match(true, match.RemainingText());
         }
     }
 }
