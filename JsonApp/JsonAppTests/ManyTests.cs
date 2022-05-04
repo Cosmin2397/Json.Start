@@ -20,5 +20,16 @@ namespace JsonAppTests
             Assert.True(many.Match(string.Empty).Success());
             Assert.True(many.Match(string.Empty).RemainingText() == string.Empty);
         }
+
+        [Theory]
+        [InlineData("aaaaaaaaaabc", "bc")]
+        [InlineData("aaaaaaaababc", "babc")]
+        [InlineData("bc", "bc")]
+        public static void CheckIfWork_WithValidChar(string inputData, string expectedString)
+        {
+            Many many = new(new Character('a'));
+            Assert.True(many.Match(inputData).Success());
+            Assert.True(many.Match(inputData).RemainingText() == expectedString);
+        }
     }
 }
