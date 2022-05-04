@@ -18,10 +18,6 @@ namespace JsonApp
         public IMatch Match(string text)
         {
             IMatch match = new Match(true, text);
-            if (string.IsNullOrEmpty(text))
-            {
-                return match;
-            }
             while (match.Success())
             {
                 match = pattern.Match(match.RemainingText());
