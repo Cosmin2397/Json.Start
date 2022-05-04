@@ -31,5 +31,16 @@ namespace JsonAppTests
             Assert.True(many.Match(inputData).Success());
             Assert.True(many.Match(inputData).RemainingText() == expectedString);
         }
+
+        [Theory]
+        [InlineData("123456789bc", "bc")]
+        [InlineData("1234", "")]
+        [InlineData("bc", "bc")]
+        public static void CheckIfWork_WithValidRange(string inputData, string expectedString)
+        {
+            Many many = new(new Range('0', '9'));
+            Assert.True(many.Match(inputData).Success());
+            Assert.True(many.Match(inputData).RemainingText() == expectedString);
+        }
     }
 }
