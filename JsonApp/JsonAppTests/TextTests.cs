@@ -5,54 +5,79 @@ namespace JsonAppTests
 {
     public class TextTests
     {
-        [Fact]
-        public static void CheckIfWork_WithNull()
+        [Theory]
+        [InlineData(null, null)]
+        public static void CheckIfWork_WithNull(string inputData, string expectedString)
         {
             Text accepted = new("true");
-            Assert.False(accepted.Match(null).Success());
-            Assert.True(accepted.Match(null).RemainingText() == null);
+            Assert.False(accepted.Match(inputData).Success());
+            Assert.True(accepted.Match(inputData).RemainingText() == expectedString);
         }
 
-        [Fact]
-        public static void CheckIfWork_WithEmpty()
+        [Theory]
+        [InlineData("", "")]
+        public static void CheckIfWork_WithEmpty(string inputData, string expectedString)
         {
             Text accepted = new("true");
-            Assert.False(accepted.Match(string.Empty).Success());
-            Assert.True(accepted.Match(string.Empty).RemainingText() == string.Empty);
+            Assert.False(accepted.Match(inputData).Success());
+            Assert.True(accepted.Match(inputData).RemainingText() == expectedString);
         }
 
-        [Fact]
-        public static void Check_WithAInvalidString_ShouldReturnFalse()
+        [Theory]
+        [InlineData("tru", "tru")]
+        [InlineData("false", "false")]
+        public static void Check_WithAInvalidString_ShouldReturnFalse(string inputData, string expectedString)
         {
             Text unsupportedTrue = new("true");
-            Text unsupportedFalse = new("false");
-            Text empty = new("");
-            Assert.False(unsupportedTrue.Match("tru").Success());
-            Assert.True(unsupportedTrue.Match("tru").RemainingText() == "tru");
-            Assert.False(unsupportedTrue.Match("false").Success());
-            Assert.True(unsupportedTrue.Match("false").RemainingText() == "false");
-            Assert.False(unsupportedFalse.Match("true").Success());
-            Assert.True(unsupportedFalse.Match("true").RemainingText() == "true");
-            Assert.False(unsupportedFalse.Match("nfalse").Success());
-            Assert.True(unsupportedFalse.Match("nfalse").RemainingText() == "nfalse");
+            bool uTrue = unsupportedTrue.Match(inputData).Success();
+            bool uTrueText = unsupportedTrue.Match(inputData).RemainingText() == expectedString;
+            Assert.False(uTrue);
+            Assert.True(uTrueText);
         }
 
-        [Fact]
-        public static void Check_WithAValidString_ShouldReturnTrue()
+        [Theory]
+        [InlineData("true", "true")]
+        [InlineData("nfalse", "nfalse")]
+        public static void Check_WithAInvalidStringFalse_ShouldReturnFalse(string inputData, string expectedString)
+        {
+            Text unsupportedFalse = new("false");
+            bool uFalse = unsupportedFalse.Match(inputData).Success();
+            bool uFalseText = unsupportedFalse.Match(inputData).RemainingText() == expectedString;
+            Assert.False(uFalse);
+            Assert.True(uFalseText);
+        }
+
+        [Theory]
+        [InlineData("truex", "x")]
+        [InlineData("true", "")]
+        public static void Check_WithAValidStringTrue_ShouldReturnTrue(string inputData, string expectedString)
         {
             Text acceptedTrue = new("true");
+
+            Assert.True(acceptedTrue.Match(inputData).Success());
+            Assert.True(acceptedTrue.Match(inputData).RemainingText() == expectedString);
+        }
+
+        [Theory]
+        [InlineData("falsex", "x")]
+        [InlineData("false", "")]
+        public static void Check_WithAValidStringFalse_ShouldReturnTrue(string inputData, string expectedString)
+        {
             Text acceptedFalse = new("false");
+
+            Assert.True(acceptedFalse.Match(inputData).Success());
+            Assert.True(acceptedFalse.Match(inputData).RemainingText() == expectedString);
+        }
+
+        [Theory]
+        [InlineData("truex", "truex")]
+        [InlineData("false", "false")]
+        public static void Check_WithAValidStringEmpty_ShouldReturnTrue(string inputData, string expectedString)
+        {
             Text empty = new("");
-            Assert.True(acceptedTrue.Match("truex").Success());
-            Assert.True(acceptedTrue.Match("truex").RemainingText() == "x");
-            Assert.True(acceptedTrue.Match("true").Success());
-            Assert.True(acceptedTrue.Match("true").RemainingText() == "");
-            Assert.True(acceptedFalse.Match("falsex").Success());
-            Assert.True(acceptedFalse.Match("falsex").RemainingText() == "x");
-            Assert.True(acceptedFalse.Match("false").Success());
-            Assert.True(acceptedFalse.Match("false").RemainingText() == "");
-            Assert.True(empty.Match("true").Success());
-            Assert.True(empty.Match("true").RemainingText() == "true");
+
+            Assert.True(empty.Match(inputData).Success());
+            Assert.True(empty.Match(inputData).RemainingText() == expectedString);
         }
     }
 }
