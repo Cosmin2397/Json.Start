@@ -14,7 +14,7 @@ namespace JsonApp
 
         public OneOrMore(IPattern pattern)
         {
-            this.pattern = pattern;
+            this.pattern = new Sequence(new Choice(pattern), new Many(pattern));
         }
 
 
