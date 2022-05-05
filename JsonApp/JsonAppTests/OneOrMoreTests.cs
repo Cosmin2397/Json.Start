@@ -70,5 +70,27 @@ namespace JsonAppTests
             Assert.True(one.Match(inputString).Success());
             Assert.Equal(one.Match(inputString).RemainingText(), expectedString);
         }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("", "")]
+        [InlineData("dbc", "dbc")]
+        public static void CheckIfWork_WithInvalidTextValues(string inputString, string expectedString)
+        {
+            OneOrMore one = new(new Text("abc"));
+            Assert.False(one.Match(inputString).Success());
+            Assert.Equal(one.Match(inputString).RemainingText(), expectedString);
+        }
+
+        [Theory]
+        [InlineData("abc123", "123")]
+        [InlineData("abcabcabcb1a", "b1a")]
+        [InlineData("abcac1913cb1a", "ac1913cb1a")]
+        public static void CheckIfWork_WithValidTextValues(string inputString, string expectedString)
+        {
+            OneOrMore one = new(new Text("abc"));
+            Assert.True(one.Match(inputString).Success());
+            Assert.Equal(one.Match(inputString).RemainingText(), expectedString);
+        }
     }
 }
