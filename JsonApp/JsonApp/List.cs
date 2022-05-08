@@ -12,7 +12,8 @@ namespace JsonApp
 
         public List(IPattern element, IPattern separator)
         {
-            this.pattern = new Many(new Choice(element, separator));
+            Sequence sequence = new(element, new Many(new Sequence(separator, element)));
+            this.pattern = sequence;
         }
 
         public IMatch Match(string text)
