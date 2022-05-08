@@ -19,5 +19,18 @@ namespace JsonAppTests
             Assert.Equal(expectedString, one.Match(inputString).RemainingText());
         }
 
+        [Theory]
+        [InlineData("1; 22  ;\n 333 \t; 22", "")]
+        [InlineData("1 \n;", " \n;")]
+        [InlineData("abc", "abc")]
+        public static void CheckIfWork_WithValidRangeValues(string inputString, string expectedString)
+        {
+            var digits = new OneOrMore(new Range('0', '9'));
+            var whitespace = new Many(new Any(" \r\n\t"));
+            var separator = new Sequence(whitespace, new Character(';'), whitespace);
+            var list = new List(digits, separator);
+            Assert.True(list.Match(inputString).Success());
+            Assert.Equal(expectedString, list.Match(inputString).RemainingText());
+        }
     }
 }
