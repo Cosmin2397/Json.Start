@@ -8,6 +8,7 @@ namespace JsonAppTests
         [Theory]
         [InlineData(null, null)]
         [InlineData("", "")]
+        [InlineData("abc", "abc")]
         public static void CheckIfWork_WithInvalidRangeValues(string inputString, string expectedString)
         {
             List one = new(new Range('0', '9'), new Character(','));

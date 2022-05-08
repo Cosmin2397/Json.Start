@@ -13,7 +13,7 @@ namespace JsonApp
         public List(IPattern element, IPattern separator)
         {
             Sequence sequence = new(element, new Many(new Sequence(separator, element)));
-            this.pattern = sequence;
+            this.pattern = new Many(sequence);
         }
 
         public IMatch Match(string text)
