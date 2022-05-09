@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace JsonApp
 {
-    public class List:IPattern
+    public class List: IPattern
     {
         private readonly IPattern pattern;
 
         public List(IPattern element, IPattern separator)
         {
             Sequence sequence = new(element, new Many(new Sequence(separator, element)));
-            this.pattern = new Many(sequence);
+            this.pattern = new Optional(sequence);
         }
 
         public IMatch Match(string text)

@@ -12,6 +12,7 @@ namespace JsonAppTests
         [InlineData("1,2,3", "")]
         [InlineData("1,2,3,", ",")]
         [InlineData("1a", "a")]
+        [InlineData("123456789", "23456789")]
         public static void CheckIfWork_WithInvalidRangeValues(string inputString, string expectedString)
         {
             List one = new(new Range('0', '9'), new Character(','));
