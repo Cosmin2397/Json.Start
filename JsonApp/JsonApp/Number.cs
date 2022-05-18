@@ -12,7 +12,15 @@ namespace JsonApp
 
         public Number()
         {
-            pattern = new Choice();
+            Character minus = new('-');
+            Character dot = new('.');
+            Any exponential = new("eE");
+            Any signs = new("+-");
+            Any empty = new("");
+            Range startNum = new('1', '9');
+            Range digits = new('0', '9');
+            Character zero = new('0');
+            pattern = zero;
         }
 
         public IMatch Match(string text)

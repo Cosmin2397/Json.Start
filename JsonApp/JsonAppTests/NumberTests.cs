@@ -7,6 +7,7 @@ namespace JsonAppTests
     {
         [Theory]
         [InlineData(null)]
+        [InlineData("")]
         public static void CheckIfWork_WithInvalidValues(string inputString)
         {
             Number num = new();
