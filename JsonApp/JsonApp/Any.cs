@@ -17,6 +17,10 @@ namespace JsonApp
 
         public IMatch Match(string text)
         {
+            if(accepted == String.Empty)
+            {
+                return new Match(accepted == text, text);
+            }
             if (!string.IsNullOrEmpty(text) && accepted.Contains(text[0]))
             {
                 return new Match(true, text[1..]);
