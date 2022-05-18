@@ -24,8 +24,9 @@ namespace JsonApp
             Sequence zeroSeq = new(zero, empty);
             Sequence fullNum = new(new Optional(signs), startNum, new Many(digits));
             Sequence exponentialSeq = new(exponential, new Optional(signs), new OneOrMore(digits), empty);
+            Sequence dotSeq = new(new Choice(zeroDotSeq, fullNum), dot, new OneOrMore(digits), new Choice(exponentialSeq, empty));
             Sequence wholeNumSeq = new(new Choice(fullNum, zeroSeq), new Choice(exponentialSeq, empty));
-            pattern = wholeNumSeq;
+            pattern = new Choice(dotSeq, wholeNumSeq);
         }
 
         public IMatch Match(string text)

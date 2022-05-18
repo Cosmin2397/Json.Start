@@ -15,6 +15,11 @@ namespace JsonAppTests
         [InlineData("12E3")]
         [InlineData("12e+3")]
         [InlineData("61e-9")]
+        [InlineData("12.36")]
+        [InlineData("0.000000001")]
+        [InlineData("10.00000001")]
+        [InlineData("12.12e33552")]
+        [InlineData("12.34E3")]
         public static void CheckIfWork_WithValidValues(string inputString)
         {
             Number num = new();
@@ -33,6 +38,12 @@ namespace JsonAppTests
         [InlineData("22e")]
         [InlineData("22e+")]
         [InlineData("22e-")]
+        [InlineData("12.")]
+        [InlineData("12.34.35")]
+        [InlineData("12.3x")]
+        [InlineData("12.e33552")]
+        [InlineData("12e.33552")]
+        [InlineData("22e3.3")]
         public static void CheckIfWork_WithInvalidValues(string inputString)
         {
             Number num = new();
