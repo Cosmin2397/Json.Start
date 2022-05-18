@@ -20,7 +20,11 @@ namespace JsonApp
             Range startNum = new('1', '9');
             Range digits = new('0', '9');
             Character zero = new('0');
-            pattern = zero;
+            Sequence zeroDotSeq = new(new Optional(minus), zero);
+            Sequence zeroSeq = new(zero, empty);
+            Sequence fullNum = new(new Optional(signs), startNum, new Many(digits));
+            Sequence exponentialSeq = new(exponential, new Optional(signs), new OneOrMore(digits), empty);
+            pattern = exponentialSeq;
         }
 
         public IMatch Match(string text)
