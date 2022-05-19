@@ -12,18 +12,12 @@ namespace JsonApp
 
         public Number()
         {
-            Any signs = new("+-");
-            Any empty = new("");
-            Range startNum = new('1', '9');
-            Range digits = new('0', '9');
-            Character zero = new('0');
-            Sequence zeroDotSeq = new(new Optional(new Character('-')), zero);
-            Sequence zeroSeq = new(zero, empty);
-            Sequence fullNum = new(new Optional(signs), startNum, new Many(digits));
-            Sequence exponentialSeq = new(new Any("eE"), new Optional(signs), new OneOrMore(digits), empty);
-            Sequence dotSeq = new(new Choice(zeroDotSeq, fullNum), new Character('.'), new OneOrMore(digits), new Choice(exponentialSeq, empty));
-            Sequence wholeNumSeq = new(new Choice(fullNum, zeroSeq), new Choice(exponentialSeq, empty));
-            pattern = new Choice(dotSeq, wholeNumSeq);
+            Range digit = new('0', '9');
+            Sequence natural = new(new Optional(new Character('-')), new Range('1', '9'), new Many(digit));
+            Choice integer = new(natural, new Character('0'));
+            Sequence exponent = new(new Any("eE"), new Optional(new Any("+-")), new OneOrMore(digit));
+            Sequence fraction = new(new Character('.'), new OneOrMore(digit), new Optional(exponent));
+            pattern = new Sequence(integer, new Optional(fraction), new Optional(exponent));
         }
 
         public IMatch Match(string text)
