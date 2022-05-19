@@ -7,6 +7,7 @@ namespace JsonAppTests
     {
         [Theory]
         [InlineData("\"\"", "")]
+        [InlineData("\"abcd\"", "")]
         public static void CheckIfWork_WithValidValues(string inputString, string remainingText)
         {
             String jsonString = new();

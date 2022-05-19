@@ -14,7 +14,8 @@ namespace JsonApp
         public String()
         {
             Character quote = new('\"');
-            pattern = new Sequence(quote, quote);
+            Choice validCharacters = new(new Range((char)32, (char)33), new Range((char)35, (char)91), new Range((char)93, (char)11093));
+            pattern = new Sequence(quote, new Many(validCharacters), quote);
         }
 
         public IMatch Match(string text)
