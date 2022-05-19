@@ -32,6 +32,7 @@ namespace JsonAppTests
         [InlineData("12e.33552", "e.33552")]
         [InlineData("22e3.3", ".3")]
         [InlineData("07", "7")]
+        [InlineData("-0", "")]
         public static void CheckIfWork_WithValidValues(string inputString, string remainingString)
         {
             Number num = new();
@@ -44,7 +45,6 @@ namespace JsonAppTests
         [InlineData("a")]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData("-0")]
         public static void CheckIfWork_WithInvalidValues(string inputString)
         {
             Number num = new();
