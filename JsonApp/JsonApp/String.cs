@@ -14,12 +14,14 @@ namespace JsonApp
         public String()
         {
             Character quote = new('\"');
-            Choice validCharacters = new(new Range((char)32, (char)33), new Range((char)35, (char)91), new Range((char)93, (char)11093));
-            var hex = new Choice(new Range('0', '9'), new Range('a', 'f'), new Range('A', 'F'));
-            var hexSeq = new Sequence(new Character('u'), new Sequence(hex, hex, hex, hex));
+            Choice validCharacters = new(new Range(' ', '!'), new Range('#', '['), new Range(']', char.MaxValue));
+            Choice hex = new (new Range('0', '9'), new Range('a', 'f'), new Range('A', 'F'));
+            Sequence hexSeq = new (new Character('u'), new Sequence(hex, hex, hex, hex));
             Any escapeChars = new("\"\\/bfnrt");
             Sequence escapeCharsSeq = new(new Character('\\'), new Choice(escapeChars, hexSeq));
-            pattern = new Sequence(quote, new Many(new Choice(validCharacters, escapeCharsSeq)), quote);
+            Choice character = new (validCharacters, escapeCharsSeq);
+            Many characters = new(character);
+            pattern = new Sequence(quote, characters , quote);
         }
 
         public IMatch Match(string text)
