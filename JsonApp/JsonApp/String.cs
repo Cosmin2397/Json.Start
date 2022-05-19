@@ -13,7 +13,8 @@ namespace JsonApp
 
         public String()
         {
-            pattern = new Choice();
+            Character quote = new('\"');
+            pattern = new Sequence(quote, quote);
         }
 
         public IMatch Match(string text)
