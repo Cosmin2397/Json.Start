@@ -8,6 +8,15 @@ namespace JsonAppTests
         [Theory]
         [InlineData("\"\"", "")]
         [InlineData("\"abcd\"", "")]
+        [InlineData("\"⛅⚾\"", "")]
+        [InlineData("\"\\\"\\\"\"", "")]
+        [InlineData("\"\\\\\"", "")]
+        [InlineData("\"\\/\"", "")]
+        [InlineData("\"\\b\"", "")]
+        [InlineData("\"\\f\"", "")]
+        [InlineData("\"\\n\"", "")]
+        [InlineData("\"\\r\"", "")]
+        [InlineData("\"\\t\"", "")]
         public static void CheckIfWork_WithValidValues(string inputString, string remainingText)
         {
             String jsonString = new();
