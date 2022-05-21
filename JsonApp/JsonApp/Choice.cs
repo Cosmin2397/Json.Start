@@ -8,7 +8,7 @@ namespace JsonApp
 {
     public class Choice : IPattern
     {
-        readonly IPattern[] patterns;
+        private IPattern[] patterns;
 
         public Choice(params IPattern[] patterns)
         {
@@ -28,6 +28,12 @@ namespace JsonApp
 
             return new Match(false, text);
 
+        }
+
+        public void Add(IPattern pattern)
+        {
+            Array.Resize(ref patterns, patterns.Length + 1);
+            patterns[^1] = pattern;
         }
     }
 }
