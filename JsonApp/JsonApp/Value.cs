@@ -14,7 +14,8 @@ namespace JsonApp
         {
             String str = new();
             Number num = new();
-            pattern = new Sequence(str);
+            Choice value = new(str, num, new Text("true"), new Text("false"), new Text("null"));
+            pattern = value;
         }
 
         public IMatch Match(string text)
