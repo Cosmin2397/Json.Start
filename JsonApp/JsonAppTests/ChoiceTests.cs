@@ -13,12 +13,12 @@ namespace JsonAppTests
             Character comma = new(',');
             Character whiteSpace = new(' ');
             Choice value = new(str, num, new Text("true"), new Text("false"), new Text("null"));
-            Sequence array = new(new Character('['), whiteSpace, new List(new Sequence(value, whiteSpace), comma), new Character(']'));
-            Sequence obj = new(new Character('{'), new List(new Sequence(whiteSpace, str, whiteSpace, new Character(':'), whiteSpace, value, whiteSpace), comma), new Character('}'));
+            Sequence array = new(new Character('['), new List(value,new Sequence(comma, whiteSpace)), new Character(']'));
+            Sequence obj = new(new Character('{'), new List(new Sequence(whiteSpace, str, whiteSpace, new Character(':'), value, whiteSpace), comma), new Character('}'));
             value.Add(array);
-            value.Add(obj); ;
-            Assert.True(value.Match("{ \"age\" : 20 , \"age\" : 23 }").Success());
-            Assert.True(value.Match("[ \"name\" ,3 ,true ,\"Ovidiu\" ]").Success());
+            value.Add(obj);
+            Assert.True(value.Match("{ \"age\" :20 , \"age\" :23 }").Success());
+            Assert.True(value.Match("[\"name\", 3, true, \"Ovidiu\"]").Success());
             Assert.False(value.Match("{ \"name\" : \"Cosmin\" , \"name\" : \"Ovidiu\"").Success());
             Assert.False(value.Match(" \"name\" ,3 ,true ,\"Ovidiu\" ]").Success());
         }
