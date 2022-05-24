@@ -15,10 +15,14 @@ namespace JsonApp
             String str = new();
             Number num = new();
             Character comma = new(',');
-            Character whiteSpace = new(' ');
+            Any whiteSpace = new(@" \u0020\u000A\u000D\u0009");
             Choice value = new(str, num, new Text("true"), new Text("false"), new Text("null"));
-            Sequence array = new(new Character('['), new List(value, new Sequence(comma, whiteSpace)), new Character(']'));
-            Sequence obj = new(new Character('{'), new List(new Sequence(whiteSpace, str, whiteSpace, new Character(':'), value, whiteSpace), comma), new Character('}'));
+            Sequence element = new(comma, whiteSpace);
+            List elements = new(value, element);
+            Sequence member = new(whiteSpace, str, whiteSpace, new Character(':'), value, whiteSpace);
+            List members = new(member, comma);
+            Sequence array = new(new Character('['), new Choice(elements, whiteSpace) , new Character(']'));
+            Sequence obj = new(new Character('{'), new Choice(members, whiteSpace), new Character('}'));
             value.Add(array);
             value.Add(obj);
             pattern = new Sequence(whiteSpace, value, whiteSpace);
