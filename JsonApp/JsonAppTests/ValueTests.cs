@@ -6,7 +6,7 @@ namespace JsonAppTests
     public class ValueTests
     {
         [Theory]
-        [InlineData(" { \"age\" :20 , \"age\" :23 } ")]
+        [InlineData(" { \"age\": 20, \"age\": 23 } ")]
         [InlineData(" [\"name\", 3, true, \"Ovidiu\"] ")]
         [InlineData(" 23 ")]
         [InlineData(" \"Ion\" ")]
