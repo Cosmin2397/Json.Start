@@ -8,6 +8,7 @@ namespace Json
         static void Main()
         {
             string input = Console.ReadLine();
+            string textFile = System.IO.File.ReadAllText(@input);
         }
     }
 }
