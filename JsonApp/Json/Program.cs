@@ -11,6 +11,14 @@ namespace Json
             string textFile = System.IO.File.ReadAllText(@input);
             Value value = new();
             bool isJson = value.Match(textFile).Success();
+            if (isJson)
+            {
+                Console.WriteLine("Is valid");
+            }
+            else
+            {
+                Console.WriteLine("Is invalid");
+            }
         }
     }
 }
