@@ -7,7 +7,7 @@ namespace Json
     {
         static void Main()
         {
-            
+            string input = Console.ReadLine();
         }
     }
 }
