@@ -7,7 +7,7 @@ namespace JsonAppTests
     {
         [Theory]
         [InlineData(" { \"age\": 20, \"age\": 23 } ")]
-        [InlineData(" [\"name\", 3, true, \"Ovidiu\"] ")]
+        [InlineData(" [ \"name\" , 3 , true , \"Ovidiu\" ] ")]
         [InlineData(" 23 ")]
         [InlineData(" \"Ion\" ")]
         [InlineData(" true ")]
