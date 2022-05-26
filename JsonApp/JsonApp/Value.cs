@@ -18,7 +18,7 @@ namespace JsonApp
             Any whiteSpace = new(" \n\t\r");
             Many whiteSpaces = new(whiteSpace);
             Choice value = new(str, num, new Text("true"), new Text("false"), new Text("null"));
-            Sequence element = new(whiteSpace, value, whiteSpace);
+            Sequence element = new(whiteSpaces, value, whiteSpaces);
             List elements = new(element, comma);
             Sequence member = new(whiteSpaces, str, whiteSpaces, new Character(':'), whiteSpace, value);
             List members = new(member, comma);
