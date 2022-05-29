@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Json": {
+      "commandName": "Project",
+      "commandLineArgs": "F:\\juniormind\\Json.Start\\JsonApp\\Json\\text.txt"
+    }
+  }
+}
