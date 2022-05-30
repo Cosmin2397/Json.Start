@@ -7,9 +7,7 @@ namespace Json
     class Program
     {
         static void Main(string[] args)
-        {
-
-            
+        { 
          string textFile = System.IO.File.ReadAllText(args[0]);
          Value value = new();
          IMatch isJson = value.Match(textFile);
