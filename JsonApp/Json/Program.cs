@@ -11,6 +11,7 @@ namespace Json
             if (args.Length == 0 || !File.Exists(args[0]))
             {
                 Console.WriteLine("You need to input a valid file path!");
+                return;
             }
             string textFile = System.IO.File.ReadAllText(args[0]);
             Value value = new();
