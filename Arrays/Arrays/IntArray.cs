@@ -38,17 +38,7 @@ namespace Arrays
 
         public bool Contains(int element)
         {
-            bool contains = false;
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (arr[i] == element)
-                {
-                    contains = true;
-                    break;
-                }
-            }
-
-            return contains;
+            return IndexOf(element) >= 0;
         }
 
         public int IndexOf(int element)
