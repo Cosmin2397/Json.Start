@@ -88,5 +88,16 @@ namespace ArraysTests
             arr.Clear();
             Assert.Equal(0, arr.Element(2));
         }
+
+        [Fact]
+        public void CanRemoveElement()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            arr.Remove(1);
+            Assert.Equal(0, arr.IndexOf(0));
+        }
     }
 }
