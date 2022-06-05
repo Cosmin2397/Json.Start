@@ -35,5 +35,16 @@ namespace ArraysTests
             arr.Add(3);
             Assert.Equal(3, arr.Element(2));
         }
+
+        [Fact]
+        public void CanSetElementAtIndex()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            arr.SetElement(2, 0);
+            Assert.Equal(0, arr.Element(2));
+        }
     }
 }
