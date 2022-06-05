@@ -8,5 +8,11 @@ namespace Arrays
 {
     public class IntArray
     {
+        readonly int[] arr;
+
+        public IntArray()
+        {
+            arr = Array.Empty<int>();
+        }
     }
 }
