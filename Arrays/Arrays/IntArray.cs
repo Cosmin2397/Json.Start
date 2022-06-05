@@ -50,5 +50,18 @@ namespace Arrays
 
             return contains;
         }
+
+        public int IndexOf(int element)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == element)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
     }
 }
