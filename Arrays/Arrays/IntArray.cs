@@ -35,5 +35,20 @@ namespace Arrays
         {
             arr[index] = element;
         }
+
+        public bool Contains(int element)
+        {
+            bool contains = false;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == element)
+                {
+                    contains = true;
+                    break;
+                }
+            }
+
+            return contains;
+        }
     }
 }
