@@ -77,5 +77,16 @@ namespace ArraysTests
             arr.Insert(1, 4);
             Assert.Equal(4, arr.Element(1));
         }
+
+        [Fact]
+        public void CanClear()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            arr.Clear();
+            Assert.Equal(0, arr.Element(2));
+        }
     }
 }
