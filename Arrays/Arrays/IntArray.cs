@@ -20,5 +20,10 @@ namespace Arrays
             Array.Resize(ref arr, arr.Length + 1);
             arr[^1] = element;
         }
+
+        public int Count()
+        {
+            return arr.Length;
+        }
     }
 }
