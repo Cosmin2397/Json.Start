@@ -8,11 +8,17 @@ namespace Arrays
 {
     public class IntArray
     {
-        readonly int[] arr;
+        private int[] arr;
 
         public IntArray()
         {
             arr = Array.Empty<int>();
+        }
+
+        public void Add(int element)
+        {
+            Array.Resize(ref arr, arr.Length + 1);
+            arr[^1] = element;
         }
     }
 }
