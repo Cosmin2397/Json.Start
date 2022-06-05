@@ -53,5 +53,16 @@ namespace Arrays
 
             return -1;
         }
+
+        public void Insert(int index, int element)
+        {
+            Array.Resize(ref arr, arr.Length + 1);
+            for (int i = arr.Length - 1; i >= index; i--)
+            {
+                arr[i] = arr[i - 1];
+            }
+
+            arr[index] = element;
+        }
     }
 }
