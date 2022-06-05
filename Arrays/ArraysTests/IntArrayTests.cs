@@ -99,5 +99,16 @@ namespace ArraysTests
             arr.Remove(1);
             Assert.Equal(0, arr.IndexOf(0));
         }
+
+        [Fact]
+        public void CanRemoveElementAt()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            arr.RemoveAt(1);
+            Assert.Equal(0, arr.IndexOf(1));
+        }
     }
 }
