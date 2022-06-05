@@ -56,5 +56,15 @@ namespace ArraysTests
             arr.Add(3);
             Assert.True(arr.Contains(1));
         }
+
+        [Fact]
+        public void CanGetIndexOfElement()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            Assert.Equal(0, arr.IndexOf(1));
+        }
     }
 }
