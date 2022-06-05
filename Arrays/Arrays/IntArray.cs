@@ -64,5 +64,13 @@ namespace Arrays
 
             arr[index] = element;
         }
+
+        public void Clear()
+        {
+            for (var i = 0; i < arr.Length; i++)
+            {
+                SetElement(i, 0);
+            }
+        }
     }
 }
