@@ -66,5 +66,16 @@ namespace ArraysTests
             arr.Add(3);
             Assert.Equal(0, arr.IndexOf(1));
         }
+
+        [Fact]
+        public void CanInsertItem()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            arr.Insert(1, 4);
+            Assert.Equal(4, arr.Element(1));
+        }
     }
 }
