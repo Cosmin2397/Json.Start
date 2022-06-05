@@ -15,5 +15,25 @@ namespace ArraysTests
             arr.Add(3);
             Assert.Equal(3, arr.Count());
         }
+
+        [Fact]
+        public void CanAddAnElement()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            Assert.Equal(2, arr.Element(1));
+        }
+
+        [Fact]
+        public void CanGetElementByIndex()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            Assert.Equal(3, arr.Element(2));
+        }
     }
 }
