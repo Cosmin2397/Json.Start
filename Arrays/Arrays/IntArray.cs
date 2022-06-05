@@ -77,5 +77,10 @@ namespace Arrays
         {
             SetElement(IndexOf(element), 0);
         }
+
+        public void RemoveAt(int index)
+        {
+            SetElement(index, 0);
+        }
     }
 }
