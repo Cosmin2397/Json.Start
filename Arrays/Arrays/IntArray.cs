@@ -72,5 +72,10 @@ namespace Arrays
                 SetElement(i, 0);
             }
         }
+
+        public void Remove(int element)
+        {
+            SetElement(IndexOf(element), 0);
+        }
     }
 }
