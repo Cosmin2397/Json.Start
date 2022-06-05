@@ -46,5 +46,15 @@ namespace ArraysTests
             arr.SetElement(2, 0);
             Assert.Equal(0, arr.Element(2));
         }
+
+        [Fact]
+        public void CanCheckIfContains()
+        {
+            var arr = new IntArray();
+            arr.Add(1);
+            arr.Add(2);
+            arr.Add(3);
+            Assert.True(arr.Contains(1));
+        }
     }
 }
