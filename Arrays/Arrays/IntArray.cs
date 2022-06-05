@@ -30,5 +30,10 @@ namespace Arrays
         {
             return arr[index];
         }
+
+        public void SetElement(int index, int element)
+        {
+            arr[index] = element;
+        }
     }
 }
