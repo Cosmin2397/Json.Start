@@ -25,5 +25,10 @@ namespace Arrays
         {
             return arr.Length;
         }
+
+        public int Element(int index)
+        {
+            return arr[index];
+        }
     }
 }
