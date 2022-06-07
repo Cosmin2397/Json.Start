@@ -8,32 +8,32 @@ namespace Arrays
 {
     public class IntArray
     {
-        private int[] arr;
+        private int[] intArray;
 
         public IntArray()
         {
-            arr = Array.Empty<int>();
+            intArray = Array.Empty<int>();
         }
 
         public void Add(int element)
         {
-            Array.Resize(ref arr, arr.Length + 1);
-            arr[^1] = element;
+            Array.Resize(ref intArray, intArray.Length + 1);
+            intArray[^1] = element;
         }
 
         public int Count()
         {
-            return arr.Length;
+            return intArray.Length;
         }
 
         public int Element(int index)
         {
-            return arr[index];
+            return intArray[index];
         }
 
         public void SetElement(int index, int element)
         {
-            arr[index] = element;
+            intArray[index] = element;
         }
 
         public bool Contains(int element)
@@ -43,9 +43,9 @@ namespace Arrays
 
         public int IndexOf(int element)
         {
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < intArray.Length; i++)
             {
-                if (arr[i] == element)
+                if (intArray[i] == element)
                 {
                     return i;
                 }
@@ -56,18 +56,14 @@ namespace Arrays
 
         public void Insert(int index, int element)
         {
-            Array.Resize(ref arr, arr.Length + 1);
-            for (int i = arr.Length - 1; i >= index; i--)
-            {
-                arr[i] = arr[i - 1];
-            }
-
-            arr[index] = element;
+            Array.Resize(ref intArray, intArray.Length + 1);
+            ShiftToRight(index);
+            intArray[index] = element;
         }
 
         public void Clear()
         {
-            for (var i = 0; i < arr.Length; i++)
+            for (var i = 0; i < intArray.Length; i++)
             {
                 SetElement(i, 0);
             }
@@ -75,12 +71,29 @@ namespace Arrays
 
         public void Remove(int element)
         {
-            SetElement(IndexOf(element), 0);
+            RemoveAt(IndexOf(element));
         }
 
         public void RemoveAt(int index)
         {
-            SetElement(index, 0);
+            ShiftToLeft(index);
+            Array.Resize(ref intArray, intArray.Length - 1);
+        }
+
+        private void ShiftToRight(int index)
+        {
+            for (int i = intArray.Length - 1; i >= index; i--)
+            {
+                intArray[i] = intArray[i - 1];
+            }
+        }
+
+        private void ShiftToLeft(int index)
+        {
+            for (int i = index + 1; i <= intArray.Length - 1; i++)
+            {
+                intArray[i - 1] = intArray[i];
+            }
         }
     }
 }

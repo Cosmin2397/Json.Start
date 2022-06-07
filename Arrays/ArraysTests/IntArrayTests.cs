@@ -1,11 +1,20 @@
 ﻿using Arrays;
 using Xunit;
-using System;
 
 namespace ArraysTests
 {
     public class IntArrayTests
     {
+        [Fact]
+        public void CanAddAnElement()
+        {
+            var intArray = new IntArray();
+            intArray.Add(1);
+            intArray.Add(2);
+            intArray.Add(3);
+            Assert.Equal(2, intArray.Element(1));
+        }
+
         [Fact]
         public void CanCountsElements()
         {
@@ -14,16 +23,6 @@ namespace ArraysTests
             arr.Add(2);
             arr.Add(3);
             Assert.Equal(3, arr.Count());
-        }
-
-        [Fact]
-        public void CanAddAnElement()
-        {
-            var arr = new IntArray();
-            arr.Add(1);
-            arr.Add(2);
-            arr.Add(3);
-            Assert.Equal(2, arr.Element(1));
         }
 
         [Fact]
@@ -97,7 +96,7 @@ namespace ArraysTests
             arr.Add(2);
             arr.Add(3);
             arr.Remove(1);
-            Assert.Equal(0, arr.IndexOf(0));
+            Assert.Equal(3, arr.Element(1));
         }
 
         [Fact]
@@ -107,8 +106,8 @@ namespace ArraysTests
             arr.Add(1);
             arr.Add(2);
             arr.Add(3);
-            arr.RemoveAt(1);
-            Assert.Equal(0, arr.IndexOf(1));
+            arr.RemoveAt(0);
+            Assert.Equal(2, arr.Element(0));
         }
     }
 }
