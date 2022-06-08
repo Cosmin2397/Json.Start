@@ -69,16 +69,15 @@ namespace Arrays
             }
         }
 
-        public void Remove(int element)
+        public bool Remove(int element)
         {
-            if (Contains(element))
+            if (!Contains(element))
             {
-                RemoveAt(IndexOf(element));
+                return false;
             }
-            else
-            {
-                Console.WriteLine("The element doesn't exist in array");
-            }
+
+            RemoveAt(IndexOf(element));
+            return true;
         }
 
         public void RemoveAt(int index)

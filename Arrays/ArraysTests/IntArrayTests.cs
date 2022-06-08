@@ -95,8 +95,7 @@ namespace ArraysTests
             arr.Add(1);
             arr.Add(2);
             arr.Add(3);
-            arr.Remove(1);
-            Assert.Equal(2, arr.Element(0));
+            Assert.True(arr.Remove(1));
         }
 
         [Fact]
